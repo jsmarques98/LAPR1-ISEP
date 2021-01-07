@@ -82,4 +82,46 @@ public class projetoFinal {
         return ((result != null) && (new File(result).isFile()));
     }
 
+    //Tentativa de criação do método para criar um o gráfico(incompleto)
+//    public static JavaPLot plotOneGraph(double auxArrPopulacao[], int auxLenght, boolean showOnScreen) throws IOException {
+//
+//
+//	JavaPlot p = new JavaPlot();
+//
+//	PlotStyle myPlotStyle = new PlotStyle();
+//        myPlotStyle.setStyle(Style.LINESPOINTS);
+//        myPlotStyle.setLineWidth(1);
+//        //RgbPlotColor = new RgbPlotColor(
+//        myPlotStyle.setLineType(NamedPlotColor.BLUE);
+//        myPlotStyle.setPointType(7);
+//        myPlotStyle.setPointSize(1);
+//
+//	double[] totalPopulacao = //Parametro String passado no getTotalPopulacao ...
+//	double matriz[][] = preencherGraphMatriz(auxArrPopulacao, auxLenght);
+//	//Falta a normalizada
+//
+//	p.getAxis("x").setLabel("", "Arial", 15);
+//        p.getAxis("y").setLabel("", "Arial", 15);
+//
+//        DataSetPlot s = new DataSetPlot(matriz);
+//        s.setTitle("Graph");
+//        s.setPlotStyle(myPlotStyle);
+//
+//        p.getAxis("x").setBoundaries(0, auxLength);
+//
+//        // p.newGraph();
+//        p.set("lmargin", "at screen 0.15");
+//        p.set("rmargin", "at screen 0.85");
+//        p.set("bmargin", "at screen 0.15");
+//        p.set("tmargin", "at screen 0.85");
+//        p.addPlot(s);
+//
+//        p.newGraph();
+//        if (showOnScreen) {
+//            p.plot();
+//        }
+//
+//        return p;
+//
+//    }
 }
