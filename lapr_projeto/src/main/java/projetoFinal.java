@@ -1,11 +1,12 @@
-import org.la4j.Matrix;
-import org.la4j.*;
-import org.la4j.decomposition.EigenDecompositor;
-import org.la4j.matrix.dense.Basic2DMatrix;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import org.la4j.Matrix;
+        import org.la4j.*;
+        import org.la4j.decomposition.EigenDecompositor;
+        import org.la4j.matrix.dense.Basic2DMatrix;
+
+        import java.io.File;
+        import java.io.FileNotFoundException;
+        import java.util.Scanner;
 
 public class projetoFinal {
 
@@ -45,7 +46,30 @@ public class projetoFinal {
                     System.out.println(matrizLeslie);
                     break;
                 case 2:
-                    //sem leitura de ficheiro
+                    System.out.println("Introduza as idades:");
+                    int idades = sc.nextInt();
+                    matriz = new double[idades];
+
+                    System.out.println("Distribuição inicial da população :");
+                    for (int i = 0; i < idades; i++) {
+                        System.out.println("Introduza valor:");
+                        matriz[i] = sc.nextDouble();
+                    }
+
+                    System.out.println("Taxa de Sobrevivência :");
+                    matrizSobrevivencia = new double[idades];
+                    for (int i = 0; i < idades; i++) {
+                        System.out.println("Introduzir valor:");
+                        matrizSobrevivencia[i] = sc.nextDouble();
+                    }
+
+                    System.out.println("Taxa de Natalidade :");
+                    matrizNatalidade = new double[idades];
+                    for (int i = 0; i < idades; i++) {
+                        System.out.println("Introduza valor :");
+                        matrizNatalidade[i] = sc.nextDouble();
+                    }
+                    
             }
         }
     }
