@@ -1,12 +1,12 @@
 
 import org.la4j.Matrix;
-        import org.la4j.*;
-        import org.la4j.decomposition.EigenDecompositor;
-        import org.la4j.matrix.dense.Basic2DMatrix;
+import org.la4j.*;
+import org.la4j.decomposition.EigenDecompositor;
+import org.la4j.matrix.dense.Basic2DMatrix;
 
-        import java.io.File;
-        import java.io.FileNotFoundException;
-        import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class projetoFinal {
 
@@ -69,9 +69,17 @@ public class projetoFinal {
                         System.out.println("Introduza valor :");
                         matrizNatalidade[i] = sc.nextDouble();
                     }
-                    
+
             }
         }
     }
     //======================================================================================================================
+
+    /*
+    * Verificação se o ficheiro obtido é válido ou não
+     */
+    private static boolean isFileValid(String result) {
+        return ((result != null) && (new File(result).isFile()));
+    }
+
 }
