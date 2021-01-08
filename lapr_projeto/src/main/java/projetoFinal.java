@@ -161,6 +161,62 @@ public class projetoFinal {
         }
         return matriz;
     }
+
+    //======================================================================================================================
+
+    //Multiplica duas matrizes da mesma ordem
+    public static double[][] multArrays(double[][]arr1, double[][]arr2){
+
+        double[][]arrM = new double[arr1.length][arr1.length];
+
+        for(int i = 0; i < arr1.length; i++){
+            for(int j = 0; j < arr1.length; j++){
+                for(int k = 0; k < arr1.length; k++){
+                    arrM[i][j] = arrM[i][j] + arr1[i][k] * arr2[k][j];
+                }
+            }
+        }
+        return arrM;
+    }
+
+    //======================================================================================================================
+
+    //Retorna uma matriz identidade
+    private static double[][] arrId(int n){
+
+        double[][] I = new double[n][n];
+        for(int i = 0; i < n; i++){
+            I[i][i] = 1;
+        }
+        return I;
+    }
+
+    //======================================================================================================================
+
+    //Calcula arr elevado a n
+    public static double[][] elevarArr(double arr[][], int n){
+
+        double[][] arrEl = arrId(arr.length);
+        for(int i = 0; i < n; i++){
+            arrEl = multArrays(arrEl, arr);
+        }
+        return arrEl;
+    }
+
+    //======================================================================================================================
+
+    //Calcula a distribuição normal da população
+    public static double[] distPopulacao(double[][]arr, double[]vetor){
+
+        double[] resultado = new double[vetor.length];
+        for(int i = 0; i < vetor.length; i++){
+            for(int k = 0; k < vetor.length; k++){
+                resultado[i] = resultado[i] + arr[i][k] * vetor[k];
+            }
+        }
+        return resultado;
+    }
+
     //======================================================================================================================
 
     //Metodo tentativa de gerar grafico
