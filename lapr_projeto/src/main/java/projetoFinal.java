@@ -125,6 +125,25 @@ public class projetoFinal {
 //
 //    }
 
+    public static void savePNG(JavaPlot p, String name) {
+
+        FileTerminal png = new FileTerminal("png", name);
+        File file = new File(name);
+
+        try {
+            file.createNewFile();
+            png.processOutput(new FileInputStream(file));
+        } catch (FileNotFoundException ex) {
+            System.err.print(ex);
+        } catch (IOException ex) {
+            System.err.print(ex);
+        }
+
+        p.setTerminal(png);
+        p.plot();
+
+    }
+
     //======================================================================================================================
 
     public static double[][] multArrays(double[][]arr1, double[][]arr2){
