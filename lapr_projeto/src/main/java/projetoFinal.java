@@ -163,6 +163,25 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+        public static Matrix criarMatrizLeslie ( double[] matrizSobrevivencia, double[] matrizNatalidade){
+            double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
+            for (int i = 0; i < matrizNatalidade.length; i++) {
+                matrizCriada[0][i] = matrizNatalidade[i];
+            }
+            int contador = 0;
+            for (int i = 0; i < matrizSobrevivencia.length; i++) {
+                for (int j = 0; j < matrizSobrevivencia.length; i++) {
+                    if (i == j + 1) {
+                        matrizCriada[i][j] = matrizSobrevivencia[contador];
+                        contador++;
+                    } else {
+                        matrizCriada[i][j] = 0;
+                    }
+                }
+            }
+            return Matrix.from2DArray(matrizCriada);
+        }
+        //=====================================================================================================================
 
     //Multiplica duas matrizes da mesma ordem
     public static double[][] multArrays(double[][]arr1, double[][]arr2){
