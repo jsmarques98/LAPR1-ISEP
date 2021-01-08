@@ -76,13 +76,13 @@ public class projetoFinal {
     //======================================================================================================================
 
     /*
-    * Verificação se o ficheiro obtido é válido ou não
+    * Verificaï¿½ï¿½o se o ficheiro obtido ï¿½ vï¿½lido ou nï¿½o
      */
     private static boolean isFileValid(String result) {
         return ((result != null) && (new File(result).isFile()));
     }
 
-    //Tentativa de criação do método para criar um o gráfico(incompleto)
+    //Tentativa de criaï¿½ï¿½o do mï¿½todo para criar um o grï¿½fico(incompleto)
 //    public static JavaPLot plotOneGraph(double auxArrPopulacao[], int auxLenght, boolean showOnScreen) throws IOException {
 //
 //
@@ -124,4 +124,20 @@ public class projetoFinal {
 //        return p;
 //
 //    }
+
+    //======================================================================================================================
+
+    public static double[][] multArrays(double[][]arr1, double[][]arr2){
+
+        double[][]arrM = new double[arr1.length][arr1.length];
+
+        for(int i = 0; i < arr1.length; i++){
+            for(int j = 0; j < arr1.length; j++){
+                for(int k = 0; k < arr1.length; k++){
+                    arrM[i][j] = arrM[i][j] + arr1[i][k] * arr2[k][j];
+                }
+            }
+        }
+        return arrM;
+    }
 }
