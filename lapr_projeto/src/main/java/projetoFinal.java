@@ -3,7 +3,6 @@ import org.la4j.*;
 import org.la4j.decomposition.EigenDecompositor;
 import org.la4j.matrix.dense.Basic2DMatrix;
 
-
 import com.panayotis.gnuplot.JavaPlot;
 import com.panayotis.gnuplot.plot.DataSetPlot;
 import com.panayotis.gnuplot.style.NamedPlotColor;
@@ -12,24 +11,25 @@ import com.panayotis.gnuplot.style.Style;
 import com.panayotis.gnuplot.terminal.FileTerminal;
 import com.panayotis.gnuplot.terminal.GNUPlotTerminal;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class projetoFinal {
-
+    //======================================================================================================================
     final static int MAX = 100; //dimensao maxima do array
     static Scanner sc = new Scanner(System.in);
-
+    //======================================================================================================================
     public static void main(String[] args) throws FileNotFoundException {
         double[] matriz = new double[MAX]; //Array que guarda as informacoes da quantidade de populacao recebido como parametro
         double[] matrizSobrevivencia = new double[MAX]; //Array que guarda as informacoes das taxas de sobrevivencia recebidos como parametro
         double[] matrizNatalidade = new double[MAX]; //Array que guarda as informacoes das taxas de natalidade recebidas como parametro
         String[] outputFileInfo = new String[3]; //Usado para definir o nome dos ficheiros de output
-        boolean endProgram = false, modoInterativo; //usado para definir quando acabar o programa e se os modulo funcionam em modo interativo ou nao interativo
+        boolean endProgram = true, modoInterativo; //usado para definir quando acabar o programa e se os modulo funcionam em modo interativo ou nao interativo
 
         if (args.length == 2 && args[0].compareTo("-nome") == 0) { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
             modoInterativo = true;
@@ -43,11 +43,10 @@ public class projetoFinal {
                 System.out.println("2 - Carregar Informações a partir de um ficheiro");
 
                 int opcao = sc.nextInt(); //selecionar opcao no menu
-                while (opcao < 0 || opcao < 2) { //confirmar se a opcao e valida
+                while (opcao < -1 || opcao > 3) { //confirmar se a opcao e valida
                     System.out.println("Opção inválida, por favor tente novamente!"); //pedir nova selecao
                     opcao = sc.nextInt(); //nova selecao
                 }
-
                 switch (opcao) {
                     case 0:
                         endProgram = true;
@@ -60,19 +59,36 @@ public class projetoFinal {
                         break;
                 }
             }
-        } else if (args.length == 11) {//Modo não interativo pede 11 argumentos
+        } else if (args.length == 7) {//Modo não interativo pede 10 argumentos
+            int numeroGeracoes = Integer.parseInt(args[0]); //Guarda o numero de geracoes
+            int Y = Integer.parseInt(args[1]); //Guarda o formato de saída do ficheiro
+            int vetorProprio = Integer.parseInt(args[2]); //Guarda o valor do vetor próprio
+            int dimensaoPopulacaoCadaGeracao = Integer.parseInt(args[3]); //Guarda dimensão da população a cada geração
+            int variacaoPopulacaoGeracoes = Integer.parseInt(args[4]); //Guarda da variação da popuação entre gerações.
+            String nomeEstudo = args[5];
+            String nomeSaida = args[6];
             modoInterativo = false;
-            int Y = Integer.parseInt(args[5]); //Guarda o formato de saída do ficheiro
-            int numeroGeracoes = Integer.parseInt(args[3]); //Guarda o numero de geracoes
-            int dimensaoPopulacaoCadaGeracao = Integer.parseInt(args[7]); //Guarda dimensão da população a cada geração
-            int variacaoPopulacaoGeracoes = Integer.parseInt(args[8]); //Guarda da variação da popuação entre gerações.
+            verificarArgumentos(Y,numeroGeracoes,dimensaoPopulacaoCadaGeracao,vetorProprio,variacaoPopulacaoGeracoes);
 
 
         } else {
             System.out.println("Numero de argumentos incorreto ou argumentos invalidos.");
         }
     }
+    //======================================================================================================================
+    public static void verificarArgumentos(int Y,int numeroGeracoes, int dimensaoPopulacaoCadaGeracao,int vetorProprio, int variacaoPopulacaoGeracoes) {
+        boolean argumentosValidos = true;
 
+        if ( Y != 1 || Y != 2 || Y != 3 ) {
+            System.out.println("Escolha de ficheiro de saída inválida.");
+            argumentosValidos = false;
+        }
+
+        if (argumentosValidos = false) { //Caso haja deficiencia nos valores introduzidos, o programa fecha
+            System.exit(0);
+        }
+
+    }
     //========================================================================================================================
     public static void readFile(String[] outputFileInfo, String fileName, double[] matriz, double[] matrizSobrevivencia, double[] matrizNatalidade, boolean modoInterativo) throws FileNotFoundException {
         while (new File(fileName).isFile() == false) {
@@ -142,6 +158,27 @@ public class projetoFinal {
             matrizNatalidade[i] = sc.nextDouble(); //Lê a taxa de natalidade, respetivamente.
         }
     }
+
+    //======================================================================================================================
+    public static Matrix criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
+        double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
+        for (int i = 0; i < matrizNatalidade.length; i++) {
+            matrizCriada[0][i] = matrizNatalidade[i];
+        }
+        int contador = 0;
+        for (int i = 0; i < matrizSobrevivencia.length; i++) {
+            for (int j = 0; j < matrizSobrevivencia.length; i++) {
+                if (i == j + 1) {
+                    matrizCriada[i][j] = matrizSobrevivencia[contador];
+                    contador++;
+                } else {
+                    matrizCriada[i][j] = 0;
+                }
+            }
+        }
+        return Matrix.from2DArray(matrizCriada);
+    }
+
     //======================================================================================================================
     public static double[] getTotalPopulacao(String[] linha) {
         double[] matriz = new double[linha.length];
@@ -161,141 +198,304 @@ public class projetoFinal {
         }
         return matriz;
     }
-
     //======================================================================================================================
-        public static Matrix criarMatrizLeslie ( double[] matrizSobrevivencia, double[] matrizNatalidade){
-            double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
-            for (int i = 0; i < matrizNatalidade.length; i++) {
-                matrizCriada[0][i] = matrizNatalidade[i];
-            }
-            int contador = 0;
-            for (int i = 0; i < matrizSobrevivencia.length; i++) {
-                for (int j = 0; j < matrizSobrevivencia.length; i++) {
-                    if (i == j + 1) {
-                        matrizCriada[i][j] = matrizSobrevivencia[contador];
-                        contador++;
-                    } else {
-                        matrizCriada[i][j] = 0;
-                    }
-                }
-            }
-            return Matrix.from2DArray(matrizCriada);
-        }
-        //=====================================================================================================================
 
-    //Multiplica duas matrizes da mesma ordem
-    public static double[][] multArrays(double[][]arr1, double[][]arr2){
+    public static double[][] multArrays(double[][] arr1, double[][] arr2) {
 
-        double[][]arrM = new double[arr1.length][arr1.length];
+        double[][] arrM = new double[arr1.length][arr1.length]; //Multiplica duas matrizes de ordem igual
 
-        for(int i = 0; i < arr1.length; i++){
-            for(int j = 0; j < arr1.length; j++){
-                for(int k = 0; k < arr1.length; k++){
+        for (int i = 0; i < arr1.length; i++) {
+            for (int j = 0; j < arr1.length; j++) {
+                for (int k = 0; k < arr1.length; k++) {
                     arrM[i][j] = arrM[i][j] + arr1[i][k] * arr2[k][j];
                 }
             }
         }
-        return arrM;
+        return arrM; //devolve o produto
     }
 
     //======================================================================================================================
+    private static double[][] arrId(int n) {
 
-    //Retorna uma matriz identidade
-    private static double[][] arrId(int n){
-
-        double[][] I = new double[n][n];
-        for(int i = 0; i < n; i++){
+        double[][] I = new double[n][n]; //Calculo da matriz identidade
+        for (int i = 0; i < n; i++) {
             I[i][i] = 1;
         }
-        return I;
+        return I; //devolve uma matriz identidade
     }
 
     //======================================================================================================================
-
-    //Calcula arr elevado a n
-    public static double[][] elevarArr(double arr[][], int n){
-
-        double[][] arrEl = arrId(arr.length);
-        for(int i = 0; i < n; i++){
-            arrEl = multArrays(arrEl, arr);
+    public static void printMatriz(double[][] matriz) {
+        for (double[] numeros : matriz) {
+            System.out.println(Arrays.toString(numeros));
         }
-        return arrEl;
     }
 
     //======================================================================================================================
+    public static void distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
+        for (int j = 0; j <= geracao; j++) {
+            System.out.println("Momento :" + j);
+            System.out.println(populacaoDistribuicaoNormalizada(L, j, matrizLeslie));
+        }
+    }
 
-    //Calcula a distribuição normal da população
-    public static double[] distPopulacao(double[][]arr, double[]vetor){
+    //======================================================================================================================
+    public static Matrix populacaoDistribuicaoNormalizada(Matrix L, int geracao, Matrix matrizLeslie) {
+        Matrix matrix = L.power(geracao);
+        return matrix.multiply(matrizLeslie);
+    }
 
-        double[] resultado = new double[vetor.length];
-        for(int i = 0; i < vetor.length; i++){
-            for(int k = 0; k < vetor.length; k++){
-                resultado[i] = resultado[i] + arr[i][k] * vetor[k];
+    //======================================================================================================================
+    private static boolean isFileValid(String result) {
+        return ((result != null) && (new File(result).isFile()));
+    }
+
+    //======================================================================================================================
+    public static String getFileName(String[] outputFileInfo, String extensaoSaida) {
+        String fileName = (outputFileInfo[0]);
+
+        return (fileName);
+    }
+
+    //======================================================================================================================
+    public static void gnuPlot(int Y, String[] outputFileInfo, boolean modoInterativo) throws IOException {
+        int escolha = Y;
+
+        if (modoInterativo == true) {
+            System.out.println("==============================");
+            System.out.println("Gráfico total da população");
+            System.out.println("==============================");
+
+            //mostra o grafico da populacao total
+
+            System.out.println("Deseja guardar o gráfico?");
+            System.out.println("Sim -» 1 || Não -» 2");
+            int opcao = sc.nextInt();
+            while ( opcao < 0 || opcao > 3) {
+                System.out.println("Escolha Inválida. Tente Novamente!");
+                opcao = sc.nextInt();
+            }
+            if (opcao == 1) {
+                System.out.println("==============================");
+                System.out.println("Escolha a opção de saída desejada :");
+                System.out.println("1 - .PNG");
+                System.out.println("2 - .TXT");
+                System.out.println("3 - .EPS");
+                System.out.println("==============================");
+                opcao = sc.nextInt();
+                while ( opcao < 0 || opcao > 3) {
+                    System.out.println("Opção Inválida. Tente Novamente!");
+                }
+                if (opcao == 1) {
+                    String fileName = getFileName(outputFileInfo,".png");
+
+                    GNUPlotTerminal png = new FileTerminal("png",fileName + ".png");
+
+                    JavaPlot saveImage = new JavaPlot();
+
+                    saveImage.addPlot("s");
+                    saveImage.plot();
+                }
+                if (opcao == 2) {
+                    String fileName = getFileName(outputFileInfo,".txt");
+
+                    FileWriter file = new FileWriter(fileName + ".txt");
+                    BufferedWriter buffWriter = new BufferedWriter(file);
+                    //ciclo for para escrever no ficheiro txt asteriscos
+
+                    buffWriter.close();
+                }
+                if (opcao == 3) {
+                    //guarda ficheiro em .epg
+                }
             }
         }
-        return resultado;
-    }
+        if (modoInterativo == true) {
+            System.out.println("==============================");
+            System.out.println("Gráfico crescimento da população");
+            System.out.println("==============================");
 
-    //======================================================================================================================
+            //mostra o grafico da populacao total
 
-    //Metodo tentativa de gerar grafico
-    public static JavaPLot plotOneGraph(double auxArrPopulacao[], int auxLenght, boolean showOnScreen) throws IOException {
+            System.out.println("Deseja guardar o gráfico?");
+            System.out.println("Sim -» 1 || Não -» 2");
+            int opcao = sc.nextInt();
+            while ( opcao < 0 || opcao > 3) {
+                System.out.println("Escolha Inválida. Tente Novamente!");
+                opcao = sc.nextInt();
+            }
+            if (opcao == 1) {
+                System.out.println("==============================");
+                System.out.println("Escolha a opção de saída desejada :");
+                System.out.println("1 - .PNG");
+                System.out.println("2 - .TXT");
+                System.out.println("3 - .EPS");
+                System.out.println("==============================");
+                opcao = sc.nextInt();
+                while ( opcao < 0 || opcao > 3) {
+                    System.out.println("Opção Inválida. Tente Novamente!");
+                }
+                if (opcao == 1) {
+                    String fileName = getFileName(outputFileInfo,".png");
 
+                    GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
 
-        JavaPlot p = new JavaPlot();
+                    JavaPlot saveImage = new JavaPlot();
+                    saveImage.setTerminal(png);
 
-        PlotStyle myPlotStyle = new PlotStyle();
-        myPlotStyle.setStyle(Style.LINESPOINTS);
-        myPlotStyle.setLineWidth(1);
-        //RgbPlotColor = new RgbPlotColor(
-        myPlotStyle.setLineType(NamedPlotColor.BLUE);
-        myPlotStyle.setPointType(7);
-        myPlotStyle.setPointSize(1);
+                    saveImage.addPlot("s");
+                    saveImage.plot();
+                }
+                if (opcao == 2) {
+                    String fileName = getFileName(outputFileInfo,".txt");
 
-       // double[] totalPopulacao = //Parametro String passado no getTotalPopulacao ...
-        double matriz[][] = preencherGraphMatriz(auxArrPopulacao, auxLenght);
-        //Falta a normalizada
+                    FileWriter file = new FileWriter(fileName + ".txt");
+                    BufferedWriter buffWriter = new BufferedWriter(file);
+                    //ciclo for para escrever no ficheiro txt asteriscos
 
-        p.getAxis("x").setLabel("", "Arial", 15);
-        p.getAxis("y").setLabel("", "Arial", 15);
-
-        DataSetPlot s = new DataSetPlot(matriz);
-        s.setTitle("Graph");
-        s.setPlotStyle(myPlotStyle);
-
-        p.getAxis("x").setBoundaries(0, auxLength);
-
-        // p.newGraph();
-        p.set("lmargin", "at screen 0.15");
-        p.set("rmargin", "at screen 0.85");
-        p.set("bmargin", "at screen 0.15");
-        p.set("tmargin", "at screen 0.85");
-        p.addPlot(s);
-
-        p.newGraph();
-        if (showOnScreen) {
-            p.plot();
+                    buffWriter.close();
+                }
+                if (opcao == 3) {
+                    //guarda ficheiro em .epg
+                }
+            }
         }
+        if (modoInterativo == true) {
+            System.out.println("==============================");
+            System.out.println("Gráfico : Distribuição do total de cada classe (Não Normalizado)");
+            System.out.println("==============================");
 
-        return p;
-    }
+            //mostra o grafico da populacao total
 
-    public static void savePNG(JavaPlot p, String name) {
+            System.out.println("Deseja guardar o gráfico?");
+            System.out.println("Sim -» 1 || Não -» 2");
+            int opcao = sc.nextInt();
+            while ( opcao < 0 || opcao > 3) {
+                System.out.println("Escolha Inválida. Tente Novamente!");
+                opcao = sc.nextInt();
+            }
+            if (opcao == 1) {
+                System.out.println("==============================");
+                System.out.println("Escolha a opção de saída desejada :");
+                System.out.println("1 - .PNG");
+                System.out.println("2 - .TXT");
+                System.out.println("3 - .EPS");
+                System.out.println("==============================");
+                opcao = sc.nextInt();
+                while ( opcao < 0 || opcao > 3) {
+                    System.out.println("Opção Inválida. Tente Novamente!");
+                }
+                if (opcao == 1) {
+                    String fileName = getFileName(outputFileInfo,".png");
 
-        FileTerminal png = new FileTerminal("png", name);
-        File file = new File(name);
+                    GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
 
-        try {
-            file.createNewFile();
-            png.processOutput(new FileInputStream(file));
-        } catch (FileNotFoundException ex) {
-            System.err.print(ex);
-        } catch (IOException ex) {
-            System.err.print(ex);
+                    JavaPlot saveImage = new JavaPlot();
+                    saveImage.setTerminal(png);
+
+                    saveImage.addPlot("s");
+                    saveImage.plot();
+                }
+                if (opcao == 2) {
+                    String fileName = getFileName(outputFileInfo,".txt");
+
+                    FileWriter file = new FileWriter(fileName + ".txt");
+                    BufferedWriter buffWriter = new BufferedWriter(file);
+                    //ciclo for para escrever no ficheiro txt asteriscos
+
+                    buffWriter.close();
+                }
+                if (opcao == 3) {
+                    //guarda ficheiro em .epg
+                }
+            }
         }
+        if (modoInterativo == true) {
+            System.out.println("==============================");
+            System.out.println("Gráfico : Distribuição do Total Normalizado");
+            System.out.println("==============================");
 
-        p.setTerminal(png);
-        p.plot();
+            //mostra o grafico da populacao total
 
+            System.out.println("Deseja guardar o gráfico?");
+            System.out.println("Sim -» 1 || Não -» 2");
+            int opcao = sc.nextInt();
+            while ( opcao < 0 || opcao > 3) {
+                System.out.println("Escolha Inválida. Tente Novamente!");
+                opcao = sc.nextInt();
+            }
+            if (opcao == 1) {
+                System.out.println("==============================");
+                System.out.println("Escolha a opção de saída desejada :");
+                System.out.println("1 - .PNG");
+                System.out.println("2 - .TXT");
+                System.out.println("3 - .EPS");
+                System.out.println("==============================");
+                opcao = sc.nextInt();
+                while ( opcao < 0 || opcao > 3) {
+                    System.out.println("Opção Inválida. Tente Novamente!");
+                }
+                if (opcao == 1) {
+                    String fileName = getFileName(outputFileInfo,".png");
+
+                    GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
+
+                    JavaPlot saveImage = new JavaPlot();
+                    saveImage.setTerminal(png);
+
+                    saveImage.addPlot("s");
+                    saveImage.plot();
+                }
+                if (opcao == 2) {
+                    String fileName = getFileName(outputFileInfo,".txt");
+
+                    FileWriter file = new FileWriter(fileName + ".txt");
+                    BufferedWriter buffWriter = new BufferedWriter(file);
+                    //ciclo for para escrever no ficheiro txt asteriscos
+
+                    buffWriter.close();
+                }
+                if (opcao == 3) {
+                    //guarda ficheiro em .epg
+                }
+            }
+        }
+        if (modoInterativo == false) {
+            if ( Y == 1) {
+                String fileName = getFileName(outputFileInfo,".png");
+
+                GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
+
+                JavaPlot saveImage = new JavaPlot();
+                saveImage.setTerminal(png);
+
+                saveImage.addPlot("s");
+                saveImage.plot();
+            }
+            if ( Y == 2) {
+                String fileName = getFileName(outputFileInfo,".txt");
+
+                FileWriter file = new FileWriter(fileName + ".txt");
+                BufferedWriter buffWriter = new BufferedWriter(file);
+                //ciclo for para escrever no ficheiro txt asteriscos
+
+                buffWriter.close();
+            }
+            if ( Y == 3) {
+                //mostrar grafico
+
+                //guarda grafico em .epS
+            }
+            if (modoInterativo == true) {
+                //limpar dados do java plot
+
+                confirmarContinuar(); //Continuar para o menu
+            }
+        }
+    }
+    //=====================================================================================================================
+    public static void confirmarContinuar() { //regressar ao menu
+        System.out.println("Enter para continuar.");
+        sc.nextLine();
     }
 }
