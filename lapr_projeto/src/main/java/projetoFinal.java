@@ -11,11 +11,7 @@ import com.panayotis.gnuplot.style.Style;
 import com.panayotis.gnuplot.terminal.FileTerminal;
 import com.panayotis.gnuplot.terminal.GNUPlotTerminal;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -260,6 +256,9 @@ public class projetoFinal {
     //======================================================================================================================
     public static void gnuPlot(int Y, String[] outputFileInfo, boolean modoInterativo) throws IOException {
         int escolha = Y;
+        String[] linha = new String[0];
+        int geracao = 0;
+
 
         if (modoInterativo == true) {
             System.out.println("==============================");
@@ -289,12 +288,15 @@ public class projetoFinal {
                 if (opcao == 1) {
                     String fileName = getFileName(outputFileInfo,".png");
 
-                    GNUPlotTerminal png = new FileTerminal("png",fileName + ".png");
+                    //GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
 
                     JavaPlot saveImage = new JavaPlot();
+                    //saveImage.setTerminal(png);
 
-                    saveImage.addPlot("s");
-                    saveImage.plot();
+                    //saveImage.addPlot("s");
+                    //saveImage.plot();
+
+                    savePNG(saveImage, fileName); //Senao utilizarmos LIMPAR
                 }
                 if (opcao == 2) {
                     String fileName = getFileName(outputFileInfo,".txt");
@@ -338,13 +340,15 @@ public class projetoFinal {
                 if (opcao == 1) {
                     String fileName = getFileName(outputFileInfo,".png");
 
-                    GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
+                    //GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
 
                     JavaPlot saveImage = new JavaPlot();
-                    saveImage.setTerminal(png);
+                    //saveImage.setTerminal(png);
 
-                    saveImage.addPlot("s");
-                    saveImage.plot();
+                    //saveImage.addPlot("s");
+                    //saveImage.plot();
+
+                    savePNG(saveImage, fileName); //Senao utilizarmos LIMPAR
                 }
                 if (opcao == 2) {
                     String fileName = getFileName(outputFileInfo,".txt");
@@ -388,13 +392,15 @@ public class projetoFinal {
                 if (opcao == 1) {
                     String fileName = getFileName(outputFileInfo,".png");
 
-                    GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
+                    //GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
 
                     JavaPlot saveImage = new JavaPlot();
-                    saveImage.setTerminal(png);
+                    //saveImage.setTerminal(png);
 
-                    saveImage.addPlot("s");
-                    saveImage.plot();
+                    //saveImage.addPlot("s");
+                    //saveImage.plot();
+
+                    savePNG(saveImage, fileName); //Senao utilizarmos LIMPAR
                 }
                 if (opcao == 2) {
                     String fileName = getFileName(outputFileInfo,".txt");
@@ -415,7 +421,7 @@ public class projetoFinal {
             System.out.println("Gráfico : Distribuição do Total Normalizado");
             System.out.println("==============================");
 
-            //mostra o grafico da populacao total
+            //double[][] graphArray = distribuicaoPopulacaoPorInstante(L, geracao, matrizLeslie); Chamar a função distribuicao normalizada com o passado das geraçoes
 
             System.out.println("Deseja guardar o gráfico?");
             System.out.println("Sim -» 1 || Não -» 2");
@@ -438,13 +444,14 @@ public class projetoFinal {
                 if (opcao == 1) {
                     String fileName = getFileName(outputFileInfo,".png");
 
-                    GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
+                    //GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
 
                     JavaPlot saveImage = new JavaPlot();
-                    saveImage.setTerminal(png);
+                    //saveImage.setTerminal(png);
+                    //saveImage.addPlot("s");
+                    //saveImage.plot();
 
-                    saveImage.addPlot("s");
-                    saveImage.plot();
+                    savePNG(saveImage, fileName); //Senao utilizarmos LIMPAR
                 }
                 if (opcao == 2) {
                     String fileName = getFileName(outputFileInfo,".txt");
@@ -464,13 +471,15 @@ public class projetoFinal {
             if ( Y == 1) {
                 String fileName = getFileName(outputFileInfo,".png");
 
-                GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
+                //GNUPlotTerminal png = new FileTerminal("png", fileName + ".png");
 
                 JavaPlot saveImage = new JavaPlot();
-                saveImage.setTerminal(png);
+                //saveImage.setTerminal(png);
 
-                saveImage.addPlot("s");
-                saveImage.plot();
+                //saveImage.addPlot("s");
+                //saveImage.plot();
+
+                savePNG(saveImage, fileName); //Senao utilizarmos LIMPAR
             }
             if ( Y == 2) {
                 String fileName = getFileName(outputFileInfo,".txt");
@@ -498,4 +507,25 @@ public class projetoFinal {
         System.out.println("Enter para continuar.");
         sc.nextLine();
     }
+    //======================================================================================================================
+    public static void savePNG(JavaPlot p, String name) {
+
+        FileTerminal png = new FileTerminal("png", name);
+        File file = new File(name);
+
+        try {
+            file.createNewFile();
+            png.processOutput(new FileInputStream(file));
+        } catch (FileNotFoundException ex) { // caso nao encontre o ficherio com o catch lança uma exceção de erro
+            System.err.print(ex);
+        } catch (IOException ex) {
+            System.err.print(ex);
+        }
+
+        p.setTerminal(png);
+        p.plot();
+
+    }
+    //=======================================================================================================================
+
 }
