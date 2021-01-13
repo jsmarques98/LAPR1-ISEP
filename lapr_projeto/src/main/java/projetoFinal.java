@@ -70,6 +70,25 @@ public class projetoFinal {
         } else {
             System.out.println("Numero de argumentos incorreto ou argumentos invalidos.");
         }
+        
+        /*double[][]arrElevado;
+
+        //para a distribuição normal
+        for(int i = 0; i <= n; i++){
+           System.out.println("t = " + i);
+           arrElevado = elevarArr(mLeslie, i);
+           for(int z = 0; z <  distPopulacao(arrElevado, vetor).length; z++){
+               System.out.println(distPopulacao(arrElevado, vetor)[z]);
+           }
+           System.out.println();
+        }
+
+        //para a dimensão da população num determinado momento
+        System.out.println(dimPopulacao(mLeslie, vetor, n));
+
+        //para a taxa de variação da população
+         System.out.printf("%.2f", taxaVarPopulacao(mLeslie, vetor, n));*/
+
     }
     //======================================================================================================================
     public static void verificarArgumentos(int Y,int numeroGeracoes, int dimensaoPopulacaoCadaGeracao,int vetorProprio, int variacaoPopulacaoGeracoes) {
@@ -221,10 +240,59 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    //Calcula um array elevado a n
+    public static double[][] elevarArr(double arr[][], int n){
+
+        double[][] arrEl = arrId(arr.length);
+        for(int i = 0; i < n; i++){
+            arrEl = multArrays(arrEl, arr);
+        }
+        return arrEl;
+    }
+    //======================================================================================================================
     public static void printMatriz(double[][] matriz) {
         for (double[] numeros : matriz) {
             System.out.println(Arrays.toString(numeros));
         }
+    }
+
+    //======================================================================================================================
+    //Calcula a distribuição normal da população para um determinado t
+    public static double[] distPopulacao(double[][]arr, double[]vetor){
+
+        double[] resultado = new double[vetor.length];
+        for(int i = 0; i < vetor.length; i++){
+
+            for(int k = 0; k < vetor.length; k++){
+                resultado[i] = resultado[i] + arr[i][k] * vetor[k];
+            }
+        }
+        return resultado;
+    }
+
+    //======================================================================================================================
+    //Calcula a dimensão da população num instante t
+    public static double dimPopulacao(double[][]arr, double[]vetor, int t){
+
+        double total = 0;
+        double[][]arrElevado;
+
+        for(int i = 0; i <= t; i++){
+            arrElevado = elevarArr(arr, i);
+            total = 0;
+            for(int z = 0; z <  distPopulacao(arrElevado, vetor).length; z++){
+                total = total + distPopulacao(arrElevado, vetor)[z];
+            }
+        }
+        return total;
+    }
+
+    //======================================================================================================================
+    //Calcula a taxa variação da população
+    public static double taxaVarPopulacao(double[][]arr, double[]vetor, int t){
+
+        double taxa = dimPopulacao(arr, vetor, t) / dimPopulacao(arr, vetor, t-1);
+        return taxa;
     }
 
     //======================================================================================================================
