@@ -111,6 +111,10 @@ public class projetoFinal {
            System.out.println();
         }
 
+        //para a distribuição normalizada
+        arrElevado = elevarArr(mLeslie, n);
+        distPopulacaoN(distPopulacao(arrElevado, vetor), dimPopulacao(mLeslie, vetor, n));
+
         //para a dimensão da população num determinado momento
         System.out.println(dimPopulacao(mLeslie, vetor, n));
 
@@ -323,6 +327,17 @@ public class projetoFinal {
             }
         }
         return resultado;
+    }
+
+    //======================================================================================================================
+    //Calcula a distribuição normalizada da população para um determinado t ?????????????????????????????????
+    public static double[] distPopulacaoN(double[] dist, double total){
+
+        double[] distribuicaoN = new double[dist.length];
+        for(int i = 0; i < distribuicaoN.length; i++){
+            distribuicaoN[i] = dist[i]/total;
+        }
+        return distribuicaoN;
     }
 
     //======================================================================================================================
