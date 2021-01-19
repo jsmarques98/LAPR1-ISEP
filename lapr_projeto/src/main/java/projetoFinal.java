@@ -71,9 +71,37 @@ public class projetoFinal {
             System.out.println("Numero de argumentos incorreto ou argumentos invalidos.");
         }
         
-        /*double[][]arrElevado;
+        /*
+        String[] linha1 = new String[0];
+        String[] linha2 = new String[0];
+        String[] linha3 = new String[0];
+        String linha = ler.nextLine();
+        int z = 1;
 
-        //para a distribuição normal
+        while (z != 4) {
+            if (linha.trim().length() != 0){        //se a linha não for nula (se tiver espaços em branco corta-os)
+                if(z == 1){
+                    linha1 = linha.split(", ");
+                }else if(z == 2){
+                    linha2 = linha.split(", ");
+                }else{
+                    linha3 = linha.split(", ");
+                }
+                z++;
+                linha = ler.nextLine();
+            } else {
+                linha = ler.nextLine();
+            }
+        }
+
+        double[] vetor = toMatrix(linha1, linha2, linha3, 'x');
+        double[] matrizSobrevivencia = toMatrix(linha1, linha2, linha3, 's');
+        double[] matrizNatalidade = toMatrix(linha1, linha2, linha3, 'f');
+
+
+        double[][]arrElevado;
+
+        //para a distribuição da população
         for(int i = 0; i <= n; i++){
            System.out.println("t = " + i);
            arrElevado = elevarArr(mLeslie, i);
@@ -175,6 +203,33 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    public static double[] toMatrix(String[] arr1, String[] arr2, String[] arr3, char letra){
+
+        double[] convert = new double[0];
+
+        if(arr1[0].charAt(0) == letra){
+            convert = new double[arr1.length];
+            for(int i = 0; i < arr1.length; i++){
+                arr1[i] = arr1[i].replaceAll(".*=", "");
+                convert[i] = Double.valueOf(arr1[i]);
+            }
+        }else if(arr2[0].charAt(0) == letra){
+            convert = new double[arr2.length];
+            for(int i = 0; i < arr2.length; i++){
+                arr2[i] = arr2[i].replaceAll(".*=", "");
+                convert[i] = Double.valueOf(arr2[i]);
+            }
+        }else if(arr3[0].charAt(0) == letra){
+            convert = new double[arr3.length];
+            for(int i = 0; i < arr3.length; i++){
+                arr3[i] = arr3[i].replaceAll(".*=", "");
+                convert[i] = Double.valueOf(arr3[i]);
+            }
+        }
+        return convert;
+    }
+
+    //======================================================================================================================
     public static Matrix criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
         double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
         for (int i = 0; i < matrizNatalidade.length; i++) {
@@ -257,7 +312,7 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    //Calcula a distribuição normal da população para um determinado t
+    //Calcula a distribuição não normalizada da população para um determinado t
     public static double[] distPopulacao(double[][]arr, double[]vetor){
 
         double[] resultado = new double[vetor.length];
