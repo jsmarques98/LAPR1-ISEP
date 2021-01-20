@@ -289,7 +289,7 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    private static double[][] arrId(int n) {
+    public static double[][] arrId(int n) {
 
         double[][] I = new double[n][n]; //Calculo da matriz identidade
         for (int i = 0; i < n; i++) {
@@ -321,12 +321,34 @@ public class projetoFinal {
 
         double[] resultado = new double[vetor.length];
         for(int i = 0; i < vetor.length; i++){
-
             for(int k = 0; k < vetor.length; k++){
                 resultado[i] = resultado[i] + arr[i][k] * vetor[k];
             }
         }
         return resultado;
+    }
+
+    //======================================================================================================================
+
+    //Calcula os valores proprios e dá return do valor com maior módulo
+    public static double maiorValorProprio(Matrix matrizLeslie){
+
+        double maior = -Double.MIN_VALUE;
+        EigenDecompositor eigenD = new EigenDecompositor(matrizLeslie);
+        Matrix [] mattD = eigenD.decompose();
+
+        double matA [][] = mattD[0].toDenseMatrix().toArray();
+        double matB [][] = mattD[1].toDenseMatrix().toArray();
+
+        for(int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++){
+                //System.out.println(matA[i][j]);
+                if(Math.abs(matA[i][j]) > maior){
+                    maior = Math.abs(matA[i][j]);
+                }
+            }
+        }
+        return maior;
     }
 
     //======================================================================================================================
