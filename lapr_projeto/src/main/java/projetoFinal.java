@@ -333,18 +333,17 @@ public class projetoFinal {
     //Calcula os valores proprios e dá return do valor com maior módulo
     public static double maiorValorProprio(Matrix matrizLeslie){
 
-        double maior = -Double.MIN_VALUE;
+        double maior = -1;
         EigenDecompositor eigenD = new EigenDecompositor(matrizLeslie);
         Matrix [] mattD = eigenD.decompose();
 
         double matA [][] = mattD[0].toDenseMatrix().toArray();
         double matB [][] = mattD[1].toDenseMatrix().toArray();
 
-        for(int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++){
-                //System.out.println(matA[i][j]);
-                if(Math.abs(matA[i][j]) > maior){
-                    maior = Math.abs(matA[i][j]);
+        for(int i = 0; i < matB.length; i++) {
+            for(int j = 0; j < matB.length; j++){
+                if(Math.abs(matB[i][j]) > maior){
+                    maior = Math.abs(matB[i][j]);
                 }
             }
         }
