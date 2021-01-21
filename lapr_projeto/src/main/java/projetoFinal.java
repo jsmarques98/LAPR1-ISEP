@@ -123,6 +123,15 @@ public class projetoFinal {
 
     }
     //======================================================================================================================
+    /**
+     * Este método verifica se os argumentos de saída e os próprios valores introduzidos são verdadeiros ou falsos.
+     *
+     * @param Y
+     * @param numeroGeracoes
+     * @param dimensaoPopulacaoCadaGeracao
+     * @param vetorProprio
+     * @param variacaoPopulacaoGeracoes
+     */
     public static void verificarArgumentos(int Y,int numeroGeracoes, int dimensaoPopulacaoCadaGeracao,int vetorProprio, int variacaoPopulacaoGeracoes) {
         boolean argumentosValidos = true;
 
@@ -176,6 +185,14 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    /**
+     * Este método faz a leitura separadamente dos diferentes tópicos existentes na matriz, ou seja a distribuição
+     * inicial da população, a taxa de sobrevivência e a taxa de natalidade numa população segundo as gerações.
+     *
+     * @param matriz
+     * @param matrizSobrevivencia
+     * @param matrizNatalidade
+     */
     public static void introduzirDados(double[] matriz, double[] matrizSobrevivencia, double[] matrizNatalidade) {
         String newFileName; //Variável que guarda o nome da espécie quando o utilizador insere os dados
         System.out.println("Identifique a nova espécie a ser estudada :");
@@ -234,6 +251,13 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    /**
+     * Este método faz a criação da matriz de leslie.
+     *
+     * @param matrizSobrevivencia
+     * @param matrizNatalidade
+     * @return matriz de leslie
+     */
     public static Matrix criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
         double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
         for (int i = 0; i < matrizNatalidade.length; i++) {
@@ -254,6 +278,12 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    /**
+     * Este método devolve o total de população.
+     *
+     * @param linha
+     * @return matriz
+     */
     public static double[] getTotalPopulacao(String[] linha) {
         double[] matriz = new double[linha.length];
         for (int i = 0; i < linha.length; i++) {
@@ -273,8 +303,15 @@ public class projetoFinal {
         return matriz;
     }
     //======================================================================================================================
-
-    public static double[][] multArrays(double[][] arr1, double[][] arr2) {
+    /**
+     * Este metodo faz o cálculo do produto entre duas matrizes de igual dimensões e devolve a matriz resultante desse
+     * mesmo produto.
+     *
+     * @param arr1
+     * @param arr2
+     * @return
+     */
+    public static double[][] multArrays(double[][] arr1, double[][] arr2) {//Possivelmente um metodo private, uma vez que só é um método de auxilio
 
         double[][] arrM = new double[arr1.length][arr1.length]; //Multiplica duas matrizes de ordem igual
 
@@ -289,6 +326,12 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    /**
+     * Este método devolve a matriz identidade.
+     *
+     * @param n
+     * @return matriz identidade
+     */
     public static double[][] arrId(int n) {
 
         double[][] I = new double[n][n]; //Calculo da matriz identidade
@@ -299,7 +342,13 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    //Calcula um array elevado a n
+    /**
+     * Este método faz o cálculo da matriz levantado a um valor n.
+     *
+     * @param arr
+     * @param n
+     * @return matriz^n
+     */
     public static double[][] elevarArr(double arr[][], int n){
 
         double[][] arrEl = arrId(arr.length);
@@ -309,6 +358,11 @@ public class projetoFinal {
         return arrEl;
     }
     //======================================================================================================================
+    /**
+     * Este método mostra os dados da matriz.
+     *
+     * @param matriz
+     */
     public static void printMatriz(double[][] matriz) {
         for (double[] numeros : matriz) {
             System.out.println(Arrays.toString(numeros));
@@ -316,7 +370,13 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    //Calcula a distribuição não normalizada da população para um determinado t
+    /**
+     * Este método calcula a distribuição não normalizada da população para um determinado tempo
+     *
+     * @param arr
+     * @param vetor
+     * @return distribuição não normalizada da população
+     */
     public static double[] distPopulacao(double[][]arr, double[]vetor){
 
         double[] resultado = new double[vetor.length];
@@ -362,7 +422,15 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    //Calcula a dimensão da população num instante t
+
+    /**
+     * Este método calcula a dimensão da população num determinado instante  t(tempo)
+     *
+     * @param arr
+     * @param vetor
+     * @param t
+     * @return dimensão da população num determinado instante
+     */
     public static double dimPopulacao(double[][]arr, double[]vetor, int t){
 
         double total = 0;
@@ -379,6 +447,13 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    /**
+     * Este método devolve uma matriz de uma dimensão de uma população ao longo do tempo.
+     *
+     * @param arrayTarget
+     * @param t
+     * @return matriz de uma dimensão de uma população ao longo do tempo
+     */
     public static int[][] dimPopulacaoPorInstante(int[] arrayTarget, int t) {
 
         int[][] graphArray = new int[t][2];
@@ -391,7 +466,14 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    //Calcula a taxa variação da população
+    /**
+     * Este método executa o cálculo da taxa de variação da população.
+     *
+     * @param arr
+     * @param vetor
+     * @param t
+     * @return taxa de variação
+     */
     public static double taxaVarPopulacao(double[][]arr, double[]vetor, int t){
 
         double taxa = dimPopulacao(arr, vetor, t) / dimPopulacao(arr, vetor, t-1);
@@ -415,6 +497,14 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+
+    /**
+     * Este método mostra a distribuição da população ao longo do tempo.
+     *
+     * @param L
+     * @param geracao
+     * @param matrizLeslie
+     */
     public static void distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
         for (int j = 0; j <= geracao; j++) {
             System.out.println("Momento :" + j);
@@ -437,17 +527,38 @@ public class projetoFinal {
 
 
     //======================================================================================================================
+    /**
+     * Este método faz o cálculo e devolve a distribuição da população normalizada.
+     *
+     * @param L
+     * @param geracao
+     * @param matrizLeslie
+     * @return distribuição da população normalizada
+     */
     public static Matrix populacaoDistribuicaoNormalizada(Matrix L, int geracao, Matrix matrizLeslie) {
         Matrix matrix = L.power(geracao);
         return matrix.multiply(matrizLeslie);
     }
 
     //======================================================================================================================
+    /**
+     * Este método verifica se o ficheiro é válido ou não.
+     *
+     * @param result
+     * @return true se o ficheiro for válido, false se o ficheiro for null ou inválido
+     */
     private static boolean isFileValid(String result) {
         return ((result != null) && (new File(result).isFile()));
     }
 
     //======================================================================================================================
+    /**
+     * Método que devolve o nome do ficheiro.
+     *
+     * @param outputFileInfo
+     * @param extensaoSaida
+     * @return fileName
+     */
     public static String getFileName(String[] outputFileInfo, String extensaoSaida) {
         String fileName = (outputFileInfo[0]);
 
@@ -455,6 +566,15 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    /**
+     * Método que constrói os gráficos do total de população, da taxa de variação, da evolução da população e da
+     * distribuição normalizada da população ao longo do tempo.
+     *
+     * @param Y
+     * @param outputFileInfo
+     * @param modoInterativo
+     * @throws IOException
+     */
     public static void gnuPlot(int Y, String[] outputFileInfo, boolean modoInterativo) throws IOException {
         int escolha = Y;
         String[] linha = new String[0];
@@ -831,7 +951,7 @@ public class projetoFinal {
         sc.nextLine();
     }
     //======================================================================================================================
-    public static void savePNG(JavaPlot p, String name) {
+    private static void savePNG(JavaPlot p, String name) {
 
         FileTerminal png = new FileTerminal("png", name);
         File file = new File(name);
