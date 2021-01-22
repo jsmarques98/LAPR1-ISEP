@@ -489,7 +489,7 @@ public class projetoFinal {
      */
     public static int[][] dimPopulacaoPorInstante(int[] arrayTarget, int geracao) {
 
-        int[][] graphArray = new int[geracao][2];
+        int[][] graphArray = new int[geracao][0];
 
         for (int i = 0; i < geracao; i++) {
             graphArray[i][0] = (i + 1);
@@ -516,7 +516,7 @@ public class projetoFinal {
     //======================================================================================================================
     public static int[][] taxaVarPopulacaoPorInstante(int[] arrayTarget, int geracao) {
 
-        int[][] arr = new int[geracao][2];
+        int[][] arr = new int[geracao][1];
 //        double taxaVariacao = taxaVarPopulacao(arr, arrayTarget, t);
 
         for (int i = 0; i < geracao; i++) {
