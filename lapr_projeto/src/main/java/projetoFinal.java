@@ -519,7 +519,7 @@ public class projetoFinal {
         Matrix distribuicaoPorInstante = Matrix.from2DArray(matrix);
 
         for (int i = 1; i <= geracao; i++) {
-            distribuicaoPorInstante.setColumn(i, convertToVector(distribuicaoTotalDaPopulacaoNormalizada(L, i, matrizLeslie)));
+            distribuicaoPorInstante.setColumn(i, convertToVector(populacaoDistribuicaoNormalizada(L, i, matrizLeslie)));
         }
         return distribuicaoPorInstante;
     }
@@ -985,13 +985,13 @@ public class projetoFinal {
 
 }
 
-    public static double lambda(Matrix leslieMatrix) {
+    public static double lambda(Matrix matrizLeslie) {
         double maior = 0;
 
-        for (int i = 0; i < leslieMatrix.rows(); i++) {
-            for (int j = 0; j < leslieMatrix.columns(); j++) {
-                if (Math.abs(leslieMatrix.get(i, j)) > maior) {
-                    maior = Math.abs(leslieMatrix.get(i, j));
+        for (int i = 0; i < matrizLeslie.rows(); i++) {
+            for (int j = 0; j < matrizLeslie.columns(); j++) {
+                if (Math.abs(matrizLeslie.get(i, j)) > maior) {
+                    maior = Math.abs(matrizLeslie.get(i, j));
                 }
             }
         }
@@ -999,9 +999,9 @@ public class projetoFinal {
         return maior;
     }
 
-    public static Matrix[] valoresProprios(Matrix leslieMatrix) {
+    public static Matrix[] valoresProprios(Matrix matrizLeslie) {
 
-        EigenDecompositor e = new EigenDecompositor(leslieMatrix);
+        EigenDecompositor e = new EigenDecompositor(matrizLeslie);
 
         Matrix[] vec = e.decompose();
         System.out.println("Vetores Próprios da matriz");
@@ -1010,4 +1010,15 @@ public class projetoFinal {
         System.out.println(vec[1]);
 
         return vec;
+    }
+
+
+    public static Vector convertToVector(Matrix matrizLeslie) {
+        double[] vector_aux = new double[matrizLeslie.rows()];
+
+        for (int i = 0; i < matrizLeslie.rows(); i++) {
+            vector_aux[i] = matrizLeslie.get(i, 0);
+        }
+
+        return Vector.fromArray(vector_aux);
     }
