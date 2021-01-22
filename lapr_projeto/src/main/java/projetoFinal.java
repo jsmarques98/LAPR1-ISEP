@@ -119,7 +119,11 @@ public class projetoFinal {
         System.out.println(dimPopulacao(mLeslie, vetor, n));
 
         //para a taxa de variação da população
-         System.out.printf("%.2f", taxaVarPopulacao(mLeslie, vetor, n));*/
+        for(int i = 0; i < n; i++){
+            System.out.println("t = " + i);
+            System.out.printf("%.2f", taxaVarPopulacao(mLeslie, vetor, i));
+            System.out.println();
+        }*/
 
     }
     //======================================================================================================================
@@ -476,7 +480,7 @@ public class projetoFinal {
      */
     public static double taxaVarPopulacao(double[][]arr, double[]vetor, int t){
 
-        double taxa = dimPopulacao(arr, vetor, t) / dimPopulacao(arr, vetor, t-1);
+        double taxa = dimPopulacao(arr, vetor, t + 1) / dimPopulacao(arr, vetor, t);
         return taxa;
     }
 
