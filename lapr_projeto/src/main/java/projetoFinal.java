@@ -79,7 +79,7 @@ public class projetoFinal {
         int z = 1;
 
         while (z != 4) {
-            if (linha.trim().length() != 0){        //se a linha nÃƒÂ£o for nula (se tiver espaÃƒÂ§os em branco corta-os)
+            if (linha.trim().length() != 0){        //se a linha nao for nula (se tiver espacos em branco corta-os)
                 if(z == 1){
                     linha1 = linha.split(", ");
                 }else if(z == 2){
@@ -99,27 +99,27 @@ public class projetoFinal {
         double[] matrizNatalidade = toMatrix(linha1, linha2, linha3, 'f');
 
         double[][] arrElevado;
-        System.out.println("DistribuiÃƒÂ§ÃƒÂ£o nÃƒÂ£o normalizada");
+        System.out.println("Distribuicao nao normalizada");
         for(int i = 0; i <= n; i++){
            arrElevado = elevarArr(mLeslie, i);
            printMatriz2CasasDecimais(distPopulacao(arrElevado, vetor),i);
         }
 
         System.out.println();
-        System.out.println("DistribuiÃƒÂ§ÃƒÂ£o normalizada");
+        System.out.println("Distribuicao normalizada");
         for(int i = 0; i <= n; i++){
             arrElevado = elevarArr(mLeslie, i);
             printMatriz2CasasDecimais( distPopulacaoN(distPopulacao(arrElevado, vetor), dimPopulacao(mLeslie, vetor, i)), i);
         }
 
         System.out.println();
-        System.out.println("NÃƒÂºmero total de indivÃƒÂ­duos");
+        System.out.println("Numero total de individuos");
         for(int i = 0; i <= n; i++){
             printValores2CasasDecimais(dimPopulacao(mLeslie, vetor, i), i);
         }
 
         System.out.println();
-        System.out.println("Taxa de variaÃƒÂ§ÃƒÂ£o");
+        System.out.println("Taxa de variacao");
         for(int i = 0; i < n; i++){
             printValores2CasasDecimais(taxaVarPopulacao(mLeslie, vetor, i), i);
         }
@@ -156,7 +156,7 @@ public class projetoFinal {
                 System.out.println("Ficheiro invalido ou inexistente, por favor inserir novo ficheiro"); //Pede um ficheiro novo
                 fileName = sc.nextLine();
             } else { //Se nao for modo interativo, programa encerra
-                System.out.println("Ficheiro invalido ou inexistente."); //Avisa que o ficheiro nÃƒÂ£o existe
+                System.out.println("Ficheiro invalido ou inexistente."); //Avisa que o ficheiro nao existe
                 System.exit(0); //fecha o programa
             }
         }
@@ -203,27 +203,27 @@ public class projetoFinal {
         newFileName = sc.nextLine(); //Ler o nome da especie
 
         System.out.println("Introduza as idades:");
-        int idades = sc.nextInt(); //LÃƒÂª a quantidade de idades, ou faixas etÃƒÂ¡rias
+        int idades = sc.nextInt(); //da a quantidade de idades, ou faixas etarias
         matriz = new double[idades];//Define a quantidade de faixas etÃƒÂ¡rias
 
         System.out.println("Distribuicao inicial da populacao :");
         for (int i = 0; i < idades; i++) {
             System.out.println("Introduza valor:");
-            matriz[i] = sc.nextDouble(); //LÃƒÂª a distribuiÃƒÂ§ÃƒÂ£o inicial da populaÃƒÂ§ÃƒÂ£o, respetivamente.
+            matriz[i] = sc.nextDouble(); //da a distribuicao inicial da populacao, respetivamente.
         }
 
         System.out.println("Taxa de Sobrevivencia :");
         matrizSobrevivencia = new double[idades];
         for (int i = 0; i < idades; i++) {
             System.out.println("Introduzir valor:");
-            matrizSobrevivencia[i] = sc.nextDouble(); //LÃƒÂª a taxa de sobrevivÃƒÂªncia, respetivamente.
+            matrizSobrevivencia[i] = sc.nextDouble(); //da a taxa de sobrevivencia, respetivamente.
         }
 
         System.out.println("Taxa de Natalidade :");
         matrizNatalidade = new double[idades];
         for (int i = 0; i < idades; i++) {
             System.out.println("Introduza valor :");
-            matrizNatalidade[i] = sc.nextDouble(); //LÃƒÂª a taxa de natalidade, respetivamente.
+            matrizNatalidade[i] = sc.nextDouble(); //da a taxa de natalidade, respetivamente.
         }
     }
 
@@ -312,7 +312,7 @@ public class projetoFinal {
 
     //======================================================================================================================
     /**
-     * Este mÃƒÂ©todo devolve o total de populacao.
+     * Este metodo devolve o total de populacao.
      *
      * @param linha
      * @return matriz
@@ -344,7 +344,7 @@ public class projetoFinal {
      * @param arr2
      * @return devolve o produto
      */
-    public static double[][] multArrays(double[][] arr1, double[][] arr2) {//Possivelmente um metodo private, uma vez que sÃƒÂ³ ÃƒÂ© um mÃƒÂ©todo de auxilio
+    public static double[][] multArrays(double[][] arr1, double[][] arr2) {//Possivelmente um metodo private, uma vez que e so um metodo de auxilio
 
         double[][] arrM = new double[arr1.length][arr1.length]; //Multiplica duas matrizes de ordem igual
 
