@@ -98,32 +98,32 @@ public class projetoFinal {
         double[] matrizSobrevivencia = toMatrix(linha1, linha2, linha3, 's');
         double[] matrizNatalidade = toMatrix(linha1, linha2, linha3, 'f');
 
-
-        double[][]arrElevado;
-
-        //para a distribuição da população
+        double[][] arrElevado;
+        System.out.println("Distribuição não normalizada");
         for(int i = 0; i <= n; i++){
-           System.out.println("t = " + i);
            arrElevado = elevarArr(mLeslie, i);
-           for(int z = 0; z <  distPopulacao(arrElevado, vetor).length; z++){
-               System.out.println(distPopulacao(arrElevado, vetor)[z]);
-           }
-           System.out.println();
+           printMatriz2CasasDecimais(distPopulacao(arrElevado, vetor),i);
         }
 
-        //para a distribuição normalizada
-        arrElevado = elevarArr(mLeslie, n);
-        distPopulacaoN(distPopulacao(arrElevado, vetor), dimPopulacao(mLeslie, vetor, n));
+        System.out.println();
+        System.out.println("Distribuição normalizada");
+        for(int i = 0; i <= n; i++){
+            arrElevado = elevarArr(mLeslie, i);
+            printMatriz2CasasDecimais( distPopulacaoN(distPopulacao(arrElevado, vetor), dimPopulacao(mLeslie, vetor, i)), i);
+        }
 
-        //para a dimensão da população num determinado momento
-        System.out.println(dimPopulacao(mLeslie, vetor, n));
+        System.out.println();
+        System.out.println("Número total de indivíduos");
+        for(int i = 0; i <= n; i++){
+            printValores2CasasDecimais(dimPopulacao(mLeslie, vetor, i), i);
+        }
 
-        //para a taxa de variação da população
+        System.out.println();
+        System.out.println("Taxa de variação");
         for(int i = 0; i < n; i++){
-            System.out.println("t = " + i);
-            System.out.printf("%.2f", taxaVarPopulacao(mLeslie, vetor, i));
-            System.out.println();
-        }*/
+            printValores2CasasDecimais(taxaVarPopulacao(mLeslie, vetor, i), i);
+        }
+        */
 
     }
     //======================================================================================================================
@@ -225,6 +225,35 @@ public class projetoFinal {
             System.out.println("Introduza valor :");
             matrizNatalidade[i] = sc.nextDouble(); //Lê a taxa de natalidade, respetivamente.
         }
+    }
+
+    //======================================================================================================================
+    /**
+     * Este método imprime os valores de uma matriz com duas casas decimais.
+     *
+     * @param matriz
+     * @param i
+     */
+    public static void printMatriz2CasasDecimais(double[] matriz, int i) {
+        System.out.println("t = " + i);
+        for (i = 0; i < matriz.length; i++){
+            System.out.printf("%.2f", matriz[i]);
+            System.out.print("  ");
+        }
+        System.out.println();
+    }
+
+    //======================================================================================================================
+    /**
+     * Este método imprime o valor com duas casas decimais.
+     *
+     * @param valor
+     * @param i
+     */
+    public static void printValores2CasasDecimais(double valor, int i){
+        System.out.println("t = " + i);
+        System.out.printf("%.2f", valor);
+        System.out.println();
     }
 
     //======================================================================================================================
@@ -420,7 +449,7 @@ public class projetoFinal {
 
         double[] distribuicaoN = new double[dist.length];
         for(int i = 0; i < distribuicaoN.length; i++){
-            distribuicaoN[i] = dist[i]/total;
+            distribuicaoN[i] = (dist[i]/total) * 100;
         }
         return distribuicaoN;
     }
