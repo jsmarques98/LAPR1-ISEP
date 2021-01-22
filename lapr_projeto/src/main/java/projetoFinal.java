@@ -509,11 +509,19 @@ public class projetoFinal {
      * @param geracao
      * @param matrizLeslie
      */
-    public static void distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
-        for (int j = 0; j <= geracao; j++) {
-            System.out.println("Momento :" + j);
-            System.out.println(populacaoDistribuicaoNormalizada(L, j, matrizLeslie));
+    public static Matrix distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
+        double[][] matrix = new double[matrizLeslie.rows()][geracao + 1];
+
+        for (int j = 0; j < matrizLeslie.rows(); j++) {
+            matrix[j][0] = matrizLeslie.get(j, 0);
         }
+
+        Matrix distribuicaoPorInstante = Matrix.from2DArray(matrix);
+
+        for (int i = 1; i <= geracao; i++) {
+            distribuicaoPorInstante.setColumn(i, convertToVector(distribuicaoTotalDaPopulacaoNormalizada(L, i, matrizLeslie)));
+        }
+        return distribuicaoPorInstante;
     }
 
     //public static double[][] distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
@@ -768,8 +776,10 @@ public class projetoFinal {
                 myPlotStyle.setPointType(7);
                 myPlotStyle.setPointSize(1);
 
-                //Falta possivelmente o metodo para a evolucao de uma especie ao longo do tempo, devolver em matriz para preencher o grafo*
-                int[][] getEvolucaoPopulacaoPorInstante; // falta o metodo
+                double[][] L = new Matrix[0][0];
+                double[][] matrizLeslie = new Matrix[0][0];
+
+                int[][] getEvolucaoPopulacaoPorInstante = distribuicaoPopulacaoPorInstante(L, geracao, matrizLeslie);
 
                 p.getAxis("x").setLabel("Tempo", "Arial", 15);
                 p.getAxis("y").setLabel("EvolucaoDaEspecie", "Arial", 15);
@@ -847,11 +857,9 @@ public class projetoFinal {
                 myPlotStyle.setPointType(7);
                 myPlotStyle.setPointSize(1);
 
-                double[][] L = new Matrix[0][0];
-                double[][] matrizLeslie = new Matrix[0][0];
 
                 //double[][] graphArray = distribuicaoPopulacaoPorInstante(L, geracao, matrizLeslie); Chamar a função distribuicao normalizada com o passado das geraçoes
-                Matrix graphArray = distribuicaoPopulacaoPorInstante(L, geracao, matrizLeslie); //Chamar a função distribuicao normalizada com o passado das geraçoes
+                Matrix graphArray ;//Chamar a função distribuicao normalizada com o passado das geraçoes
                 // Tem erro ainda precisamos de passar uma matriz*
 
                 p.getAxis("x").setLabel("Tempo", "Arial", 15);
