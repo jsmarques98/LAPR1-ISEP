@@ -972,3 +972,17 @@ public class projetoFinal {
     //=======================================================================================================================
 
 }
+
+    public static double lambda(Matrix leslieMatrix) {
+        double maior = 0;
+
+        for (int i = 0; i < leslieMatrix.rows(); i++) {
+            for (int j = 0; j < leslieMatrix.columns(); j++) {
+                if (Math.abs(leslieMatrix.get(i, j)) > maior) {
+                    maior = Math.abs(leslieMatrix.get(i, j));
+                }
+            }
+        }
+
+        return maior;
+    }
