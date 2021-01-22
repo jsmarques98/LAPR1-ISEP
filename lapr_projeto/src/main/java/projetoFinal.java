@@ -986,3 +986,16 @@ public class projetoFinal {
 
         return maior;
     }
+
+    public static Matrix[] valoresProprios(Matrix leslieMatrix) {
+
+        EigenDecompositor e = new EigenDecompositor(leslieMatrix);
+
+        Matrix[] vec = e.decompose();
+        System.out.println("Vetores Próprios da matriz");
+        System.out.println(vec[0]);
+        System.out.println("Valores Próprios da matriz");
+        System.out.println(vec[1]);
+
+        return vec;
+    }
