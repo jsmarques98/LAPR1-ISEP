@@ -479,15 +479,28 @@ public class projetoFinal {
         EigenDecompositor eigenD = new EigenDecompositor(matrizLeslie);
         Matrix [] mattD = eigenD.decompose();
 
-        //double matA [][] = mattD[0].toDenseMatrix().toArray();
-        double matB [][] = mattD[1].toDenseMatrix().toArray();
+        double matA [][] = mattD[0].toDenseMatrix().toArray();  //vetores próprios
+        double matB [][] = mattD[1].toDenseMatrix().toArray();  //valores próprios
         double maior = matB [0][0];
+        int colunaVetor = 0;
 
         for(int i = 0; i < matB.length; i++) {
             if(Math.abs(matB[i][i]) > Math.abs(maior)){
                 maior = matB[i][i];
+                colunaVetor = i;
             }
         }
+
+        for(int i = 0; i < matA.length; i++) {
+            if(i == 0){
+                System.out.print("(" + String.format("%.2f", matA[i][colunaVetor]) + ", ");
+            }else if (i == matA.length - 1){
+                System.out.print(String.format("%.2f", matA[i][colunaVetor]) + ")");
+            }else{
+                System.out.print(String.format("%.2f", matA[i][colunaVetor]) + ", ");
+            }
+        }
+        System.out.println();
         return maior;
     }
 
