@@ -27,7 +27,7 @@ public class projetoFinal {
         String[] outputFileInfo = new String[3]; //Usado para definir o nome dos ficheiros de output
         boolean endProgram = true, modoInterativo; //usado para definir quando acabar o programa e se os modulo funcionam em modo interativo ou nao interativo
 
-        if (args.length == 2 && args[0].compareTo("-nome") == 0) { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
+        if (args.length == 2)  { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
             modoInterativo = true;
 
             while (endProgram == false) { //Repetir atÃƒÂ© o programa ser fechado
@@ -48,7 +48,7 @@ public class projetoFinal {
                         endProgram = true;
                         break;
                     case 1: //carregar informaÃƒÂ§ÃƒÂµes a partir de um ficheiro
-                        readFile(outputFileInfo, args[1], matriz, matrizSobrevivencia, matrizNatalidade, modoInterativo); //le organiza dados do ficheiro
+                        readFile(outputFileInfo, "test.txt", matriz, matrizSobrevivencia, matrizNatalidade, modoInterativo); //le organiza dados do ficheiro
                         break;
                     case 2: //introduzir informacoes nos contentores
                         introduzirDados(matriz, matrizSobrevivencia, matrizNatalidade);
