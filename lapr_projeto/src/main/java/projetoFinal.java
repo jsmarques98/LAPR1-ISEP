@@ -311,6 +311,25 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    //cria matriz de Leslie
+    public static double[][] matrizLeslie(double[]arr1, double[]arr2){
+
+        double[][] mLeslie = new double[arr2.length][arr2.length];
+        int z = 0;
+        for(int i = 0; i < mLeslie.length; i++){
+            if(i == 0){
+                for(int j = 0; j < mLeslie.length; j++){
+                    mLeslie[i][j] = arr2[j];
+                }
+            }else if(z != arr1.length){
+                mLeslie[i][z] = arr1[z];
+                z++;
+            }
+        }
+        return mLeslie;
+    }
+
+    //======================================================================================================================
     /**
      * Este metodo devolve o total de populacao.
      *
