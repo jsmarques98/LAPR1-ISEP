@@ -600,31 +600,34 @@ public class projetoFinal {
      * @param geracao
      * @param matrizLeslie
      */
-    public static Matrix distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
-        double[][] matrix = new double[matrizLeslie.rows()][geracao + 1];
+    //public static Matrix distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
+  //      double[][] matrix = new double[matrizLeslie.rows()][geracao + 1];
+//
+      //  for (int j = 0; j < matrizLeslie.rows(); j++) {
+    //        matrix[j][0] = matrizLeslie.get(j, 0);
+  //      }
+//
+        //Matrix distribuicaoPorInstante = Matrix.from2DArray(matrix);
+//
+        //for (int i = 1; i <= geracao; i++) {
+        //    distribuicaoPorInstante.setColumn(i, convertToVector(populacaoDistribuicaoNormalizada(L, i, matrizLeslie)));
+      //  }
+    //    return distribuicaoPorInstante;
+   // }
 
-        for (int j = 0; j < matrizLeslie.rows(); j++) {
-            matrix[j][0] = matrizLeslie.get(j, 0);
+    public static double[][] distribuicaoPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
+        double[][] matriz = new double[geracao + 1][geracao + 1];
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < 2; j++) {
+                if (j == 0) {
+                    matriz[i][j] = i;
+                } else if (j == 1) {
+                    matriz[i][j] = populacaoDistribuicaoNormalizada(arr, geracao, vetor);
+                }
+            }
         }
-
-        Matrix distribuicaoPorInstante = Matrix.from2DArray(matrix);
-
-        for (int i = 1; i <= geracao; i++) {
-            distribuicaoPorInstante.setColumn(i, convertToVector(populacaoDistribuicaoNormalizada(L, i, matrizLeslie)));
-        }
-        return distribuicaoPorInstante;
+        return matriz;
     }
-
-//    public static double[][] distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
-//     double[][] distPopulacaoPorInstante = new double[geracao][2];
-//
-//            for (int j = 0; j <= geracao; j++) {
-//                System.out.println("Momento :" + j);
-//                distPopulacaoPorInstante = populacaoDistribuicaoNormalizada(L, j, matrizLeslie);
-//            }
-//            return distPopulacaoPorInstante;
-//
-//        }
 
 
 
@@ -868,10 +871,7 @@ public class projetoFinal {
                 myPlotStyle.setPointType(7);
                 myPlotStyle.setPointSize(1);
 
-                Matrix L = null;
-                Matrix matrizLeslie = null;
-
-                Matrix getEvolucaoPopulacaoPorInstante = distribuicaoPopulacaoPorInstante(L, geracao, matrizLeslie);
+                double[][] getEvolucaoPopulacaoPorInstante = distribuicaoPopulacaoPorInstante(arr, vetor, geracao);
 
                 p.getAxis("x").setLabel("Tempo", "Arial", 15);
                 p.getAxis("y").setLabel("EvolucaoDaEspecie", "Arial", 15);
