@@ -30,9 +30,9 @@ public class projetoFinal {
         if (args.length == 2)  { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
             modoInterativo = true;
 
-            while (endProgram == false) { //Repetir atÃƒÂ© o programa ser fechado
+            while (endProgram == false) { //Repetir ate o programa ser fechado
                 /*
-                Imprimir instruÃƒÂ§ÃƒÂµes do menu
+                Imprimir instrucoes do menu
                  */
                 System.out.println("0 - Fechar o programa.");
                 System.out.println("1 - Ler Informacoes de um ficheiro.");
@@ -125,6 +125,8 @@ public class projetoFinal {
         }
         */
 
+    //Falta o gnuplot
+    //Se tivermos tempo vermos melhor se compensa ter o menu dentro do main ou no maind chamar o menu(talvez mais eficiente)
     }
     //======================================================================================================================
     /**
