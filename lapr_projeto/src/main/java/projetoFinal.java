@@ -183,7 +183,7 @@ public class projetoFinal {
         matrizNatalidade = getValores(terceiraLinha); //Guarda a Informacao da Taxa de Natalidade
 
         matrizLeslie = criarMatrizLeslie(matrizSobrevivencia, matrizNatalidade); //Cria a matriz de Leslie com os valores atribuidos pelo ficheiro
-        //System.out.println(matrizLeslie);
+        printMatriz(matrizLeslie);
 
         lerFicheiro.close(); //Fecha o ficheiro
     }
