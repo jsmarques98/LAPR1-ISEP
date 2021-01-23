@@ -171,7 +171,7 @@ public class projetoFinal {
     //======================================================================================================================
     public static void storeFileInfo(String fileName, double[] matriz, double[] matrizSobrevivencia, double[] matrizNatalidade) throws FileNotFoundException {
 
-        Matrix matrizLeslie; //Variavel que contem os dados referentes ao modelo matricial de Leslie
+        double[][] matrizLeslie; //Variavel que contem os dados referentes ao modelo matricial de Leslie
         Scanner lerFicheiro = new Scanner(new File(fileName));
         String[] primeiraLinha = lerFicheiro.nextLine().trim().split(","); //Divide a informacao da populacao inicial
         matriz = getTotalPopulacao(primeiraLinha); //Guarda a informacao da populacao Inicial
@@ -183,7 +183,7 @@ public class projetoFinal {
         matrizNatalidade = getValores(terceiraLinha); //Guarda a Informacao da Taxa de Natalidade
 
         matrizLeslie = criarMatrizLeslie(matrizSobrevivencia, matrizNatalidade); //Cria a matriz de Leslie com os valores atribuidos pelo ficheiro
-        System.out.println(matrizLeslie);
+        //System.out.println(matrizLeslie);
 
         lerFicheiro.close(); //Fecha o ficheiro
     }
@@ -291,7 +291,7 @@ public class projetoFinal {
      * @param matrizNatalidade
      * @return matriz de leslie
      */
-    public static Matrix criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
+    public static double[][] criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
         double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
         for (int i = 0; i < matrizNatalidade.length; i++) {
             matrizCriada[0][i] = matrizNatalidade[i];
@@ -307,7 +307,7 @@ public class projetoFinal {
                 }
             }
         }
-        return Matrix.from2DArray(matrizCriada);
+        return matrizCriada;
     }
 
     //======================================================================================================================
