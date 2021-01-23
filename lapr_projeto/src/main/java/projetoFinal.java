@@ -1095,44 +1095,6 @@ public class projetoFinal {
 
     }
     //=======================================================================================================================
-
-
-    public static double lambda(Matrix matrizLeslie) {
-        double maior = 0;
-
-        for (int i = 0; i < matrizLeslie.rows(); i++) {
-            for (int j = 0; j < matrizLeslie.columns(); j++) {
-                if (Math.abs(matrizLeslie.get(i, j)) > maior) {
-                    maior = Math.abs(matrizLeslie.get(i, j));
-                }
-            }
-        }
-
-        return maior;
-    }
-
-    public static Matrix[] valoresProprios(Matrix matrizLeslie) {
-
-        EigenDecompositor e = new EigenDecompositor(matrizLeslie);
-
-        Matrix[] vec = e.decompose();
-        System.out.println("Vetores Proprios da matriz");
-        System.out.println(vec[0]);
-        System.out.println("Valores Proprios da matriz");
-        System.out.println(vec[1]);
-
-        return vec;
-    }
-
-
-    public static Vector convertToVector(Matrix matrizLeslie) {
-        double[] vector_aux = new double[matrizLeslie.rows()];
-
-        for (int i = 0; i < matrizLeslie.rows(); i++) {
-            vector_aux[i] = matrizLeslie.get(i, 0);
-        }
-
-        return Vector.fromArray(vector_aux);
-    }
+    
 
 }
