@@ -47,7 +47,7 @@ public class projetoFinal {
                     case 0:
                         endProgram = true;
                         break;
-                    case 1: //carregar informaÃƒÂ§ÃƒÂµes a partir de um ficheiro
+                    case 1: //carregar informacoes a partir de um ficheiro
                         readFile(outputFileInfo, "test.txt", matriz, matrizSobrevivencia, matrizNatalidade, modoInterativo); //le organiza dados do ficheiro
                         break;
                     case 2: //introduzir informacoes nos contentores
@@ -55,12 +55,12 @@ public class projetoFinal {
                         break;
                 }
             }
-        } else if (args.length == 7) {//Modo nÃƒÂ£o interativo pede 10 argumentos
+        } else if (args.length == 7) {//Modo nao interativo pede 10 argumentos
             int numeroGeracoes = Integer.parseInt(args[0]); //Guarda o numero de geracoes
-            int Y = Integer.parseInt(args[1]); //Guarda o formato de saÃƒÂ­da do ficheiro
-            int vetorProprio = Integer.parseInt(args[2]); //Guarda o valor do vetor prÃƒÂ³prio
-            int dimensaoPopulacaoCadaGeracao = Integer.parseInt(args[3]); //Guarda dimensÃƒÂ£o da populaÃƒÂ§ÃƒÂ£o a cada geraÃƒÂ§ÃƒÂ£o
-            int variacaoPopulacaoGeracoes = Integer.parseInt(args[4]); //Guarda da variaÃƒÂ§ÃƒÂ£o da popuaÃƒÂ§ÃƒÂ£o entre geraÃƒÂ§ÃƒÂµes.
+            int Y = Integer.parseInt(args[1]); //Guarda o formato de saida do ficheiro
+            int vetorProprio = Integer.parseInt(args[2]); //Guarda o valor do vetor proprio
+            int dimensaoPopulacaoCadaGeracao = Integer.parseInt(args[3]); //Guarda dimensao da populacao a cada geracao
+            int variacaoPopulacaoGeracoes = Integer.parseInt(args[4]); //Guarda da variacao da popuacao entre geracoes.
             String nomeEstudo = args[5];
             String nomeSaida = args[6];
             modoInterativo = false;
@@ -150,6 +150,19 @@ public class projetoFinal {
 
     }
     //========================================================================================================================
+
+    /**
+     * Este metodo faz a leitura do ficheiro recebido por parametro e as suas validacoes caso este nao seja encontrado
+     * ou seja invalido
+     *
+     * @param outputFileInfo
+     * @param fileName
+     * @param matriz
+     * @param matrizSobrevivencia
+     * @param matrizNatalidade
+     * @param modoInterativo
+     * @throws FileNotFoundException
+     */
     public static void readFile(String[] outputFileInfo, String fileName, double[] matriz, double[] matrizSobrevivencia, double[] matrizNatalidade, boolean modoInterativo) throws FileNotFoundException {
         while (new File(fileName).isFile() == false) {
             if (modoInterativo == true) {
@@ -204,7 +217,7 @@ public class projetoFinal {
 
         System.out.println("Introduza as idades:");
         int idades = sc.nextInt(); //da a quantidade de idades, ou faixas etarias
-        matriz = new double[idades];//Define a quantidade de faixas etÃƒÂ¡rias
+        matriz = new double[idades];//Define a quantidade de faixas etarias
 
         System.out.println("Distribuicao inicial da populacao :");
         for (int i = 0; i < idades; i++) {
@@ -257,6 +270,17 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+
+    /**
+     * Este metodo pega nas linhas do ficheiro lido e, basicamente formata-as da forma que nos queremos com o uso do
+     * "replaceAll", onde ha a substituicao de espacos e do carater "=" como se de um split se tratasse.
+     *
+     * @param arr1
+     * @param arr2
+     * @param arr3
+     * @param letra
+     * @return arrays com a formatacao.
+     */
     public static double[] toMatrix(String[] arr1, String[] arr2, String[] arr3, char letra){
 
         double[] convert = new double[0];
@@ -312,22 +336,22 @@ public class projetoFinal {
 
     //======================================================================================================================
     //cria matriz de Leslie
-    public static double[][] matrizLeslie(double[]arr1, double[]arr2){
+    //public static double[][] matrizLeslie(double[]arr1, double[]arr2){
 
-        double[][] mLeslie = new double[arr2.length][arr2.length];
-        int z = 0;
-        for(int i = 0; i < mLeslie.length; i++){
-            if(i == 0){
-                for(int j = 0; j < mLeslie.length; j++){
-                    mLeslie[i][j] = arr2[j];
-                }
-            }else if(z != arr1.length){
-                mLeslie[i][z] = arr1[z];
-                z++;
-            }
-        }
-        return mLeslie;
-    }
+        //double[][] mLeslie = new double[arr2.length][arr2.length];
+        //int z = 0;
+        //for(int i = 0; i < mLeslie.length; i++){
+            //if(i == 0){
+               // for(int j = 0; j < mLeslie.length; j++){
+                //    mLeslie[i][j] = arr2[j];
+              //  }
+            //}else if(z != arr1.length){
+            //    mLeslie[i][z] = arr1[z];
+          //      z++;
+        //    }
+      //  }
+        //return mLeslie;
+   // }
 
     //======================================================================================================================
     /**
@@ -374,7 +398,7 @@ public class projetoFinal {
                 }
             }
         }
-        return arrM; //devolve o produto
+        return arrM;
     }
 
     //======================================================================================================================
@@ -442,7 +466,12 @@ public class projetoFinal {
 
     //======================================================================================================================
 
-    //Calcula os valores proprios e da return do valor com maior modulo
+    /**
+     * Este metodo faz o  calculo dos valores proprios e da return do valor com maior modulo.
+     *
+     * @param matrizLeslie
+     * @return valor com maior modulo
+     */
     public static double maiorValorProprio(Matrix matrizLeslie){
 
         double maior = -1;
@@ -476,7 +505,7 @@ public class projetoFinal {
     //======================================================================================================================
 
     /**
-     * Este metodo calcula a dimensÃƒÂ£o da populacao num determinado instante  t(tempo)
+     * Este metodo calcula a dimensao da populacao num determinado instante  t(tempo)
      *
      * @param arr
      * @param vetor
@@ -500,22 +529,27 @@ public class projetoFinal {
 
     //======================================================================================================================
     /**
-     * Este mÃƒÂ©todo devolve uma matriz de uma dimensao de uma populacao ao longo do tempo.
+     * Este metodo devolve uma matriz de uma dimensao de uma populacao ao longo do tempo.
      *
      * @param arrayTarget
      * @param geracao
      * @return matriz de uma dimensao de uma populacao ao longo do tempo
      */
-    public static int[][] dimPopulacaoPorInstante(int[] arrayTarget, int geracao) {
 
-        int[][] graphArray = new int[geracao][0];
+        public static double[][] dimPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
 
-        for (int i = 0; i < geracao; i++) {
-            graphArray[i][0] = (i + 1);
-            graphArray[i][0] = arrayTarget[i];
+            double[][] matriz = new double[geracao + 1][geracao + 1];
+            for (int i = 0; i < matriz.length; i++) {
+                for (int j = 0; j < 2; j++) {
+                    if (j == 0) {
+                        matriz[i][j] = i;
+                    } else if (j == 1) {
+                        matriz[i][j] = dimPopulacao(arr, vetor, i);
+                    }
+                }
+            }
+            return matriz;
         }
-        return graphArray;
-    }
 
     //======================================================================================================================
     /**
@@ -533,19 +567,28 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    public static int[][] taxaVarPopulacaoPorInstante(int[] arrayTarget, int geracao) {
 
-        int[][] arr = new int[geracao][1];
-//        double taxaVariacao = taxaVarPopulacao(arr, arrayTarget, t);
+    /**
+     * Este metodo devolve uma matriz da taxa de variacao da populacao ao longo do tempo/geracoes.
+     *
+     * @param arr
+     * @param vetor
+     * @param geracao
+     * @return matriz da taxa de variacao da populacao ao longo do tempo/geracoes
+     */
+    public static double[][] taxaVarPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
 
-        for (int i = 0; i < geracao; i++) {
-            //System.out.println("Momento :" + i);
-            //taxaPopulacaoPorInstante = taxaVarPopulacao(arr, arrayTarget, i);
-            arr[i][0] = (i + 1);
-            arr[i][1] = arrayTarget[i];
-
+        double[][] matriz = new double[geracao + 1][geracao + 1];
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < 2; j++) {
+                if (j == 0) {
+                    matriz[i][j] = i;
+                } else if (j == 1) {
+                    matriz[i][j] = taxaVarPopulacao(arr, vetor, i);
+                }
+            }
         }
-        return arr;
+        return matriz;
     }
 
     //======================================================================================================================
@@ -639,7 +682,8 @@ public class projetoFinal {
         int escolha = Y;
         String[] linha = new String[0];
         int geracao = 0;
-        int[] vetor = new int[0];
+        double[] vetor = new int[0];
+        double[][] arr = new double[0][0];
 
         if (modoInterativo == true) {
             System.out.println("==============================");
@@ -663,7 +707,7 @@ public class projetoFinal {
                 myPlotStyle.setPointType(7);
                 myPlotStyle.setPointSize(1);
 
-                int[][] getTotalPopulacaoPorInstante = dimPopulacaoPorInstante(vetor, geracao); //Ver o metodo, uma vez que ele so preenche basicamente a matriz
+                double[][] getTotalPopulacaoPorInstante = dimPopulacaoPorInstante(arr,vetor, geracao);
 
                 p.getAxis("x").setLabel("Tempo", "Arial", 15);
                 p.getAxis("y").setLabel("TotalPopulacao", "Arial", 15);
@@ -747,7 +791,7 @@ public class projetoFinal {
                 myPlotStyle.setPointType(7);
                 myPlotStyle.setPointSize(1);
 
-                int[][] getTotalVariacaoPorInstante = taxaVarPopulacaoPorInstante(vetor, geracao); //devolver matriz****
+                double[][] getTotalVariacaoPorInstante = taxaVarPopulacaoPorInstante(arr,vetor, geracao);
 
                 p.getAxis("x").setLabel("Tempo", "Arial", 15);
                 p.getAxis("y").setLabel("TaxaVariacaoDaPopulacao", "Arial", 15);
@@ -1012,6 +1056,13 @@ public class projetoFinal {
         sc.nextLine();
     }
     //======================================================================================================================
+
+    /**
+     * Este metodo salva o ficheiro png criado(com o grafico especifico) no metodo gnuplot.
+     *
+     * @param p
+     * @param name
+     */
     private static void savePNG(JavaPlot p, String name) {
 
         FileTerminal png = new FileTerminal("png", name);
