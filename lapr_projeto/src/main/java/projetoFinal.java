@@ -1071,7 +1071,7 @@ public class projetoFinal {
         try {
             file.createNewFile();
             png.processOutput(new FileInputStream(file));
-        } catch (FileNotFoundException ex) { // caso nao encontre o ficherio com o catch lanÃƒÂ§a uma exceÃƒÂ§ÃƒÂ£o de erro
+        } catch (FileNotFoundException ex) { // caso nao encontre o ficherio com o catch lancaa uma excecao de erro
             System.err.print(ex);
         } catch (IOException ex) {
             System.err.print(ex);
