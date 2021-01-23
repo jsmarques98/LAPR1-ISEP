@@ -476,18 +476,16 @@ public class projetoFinal {
      */
     public static double maiorValorProprio(Matrix matrizLeslie){
 
-        double maior = -1;
         EigenDecompositor eigenD = new EigenDecompositor(matrizLeslie);
         Matrix [] mattD = eigenD.decompose();
 
-        double matA [][] = mattD[0].toDenseMatrix().toArray();
+        //double matA [][] = mattD[0].toDenseMatrix().toArray();
         double matB [][] = mattD[1].toDenseMatrix().toArray();
+        double maior = matB [0][0];
 
         for(int i = 0; i < matB.length; i++) {
-            for(int j = 0; j < matB.length; j++){
-                if(Math.abs(matB[i][j]) > maior){
-                    maior = Math.abs(matB[i][j]);
-                }
+            if(Math.abs(matB[i][i]) > Math.abs(maior)){
+                maior = matB[i][i];
             }
         }
         return maior;
