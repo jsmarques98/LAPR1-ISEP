@@ -27,6 +27,7 @@ public class projetoFinal {
         double[] matrizNatalidade = new double[MAX]; //Array que guarda as informacoes das taxas de natalidade recebidas como parametro
         String[] outputFileInfo = new String[3]; //Usado para definir o nome dos ficheiros de output
         boolean endProgram = false, modoInterativo; //usado para definir quando acabar o programa e se os modulo funcionam em modo interativo ou nao interativo
+        int escolha = 0;
 
         if (args.length == 2)  { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
             modoInterativo = true;
@@ -55,6 +56,7 @@ public class projetoFinal {
                         introduzirDados(matriz, matrizSobrevivencia, matrizNatalidade);
                         break;
                 }
+                gnuPlot(escolha, outputFileInfo, true);
             }
         } else if (args.length == 7) {//Modo nao interativo pede 10 argumentos
             int numeroGeracoes = Integer.parseInt(args[0]); //Guarda o numero de geracoes
