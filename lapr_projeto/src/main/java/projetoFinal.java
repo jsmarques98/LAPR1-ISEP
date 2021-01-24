@@ -19,6 +19,7 @@ public class projetoFinal {
     //======================================================================================================================
     final static int MAX = 100; //dimensao maxima do array
     static Scanner sc = new Scanner(System.in);
+
     //======================================================================================================================
     public static void main(String[] args) throws FileNotFoundException {
         double[] matriz = new double[MAX]; //Array que guarda as informacoes da quantidade de populacao recebido como parametro
@@ -27,7 +28,7 @@ public class projetoFinal {
         String[] outputFileInfo = new String[3]; //Usado para definir o nome dos ficheiros de output
         boolean endProgram = false, modoInterativo; //usado para definir quando acabar o programa e se os modulo funcionam em modo interativo ou nao interativo
 
-        if (args.length == 1)  { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
+        if (args.length == 2)  { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
             modoInterativo = true;
 
             while (endProgram == false) { //Repetir ate o programa ser fechado
@@ -36,7 +37,7 @@ public class projetoFinal {
                  */
                 System.out.println("0 - Fechar o programa.");
                 System.out.println("1 - Ler Informacoes de um ficheiro.");
-                System.out.println("2 - Carregar Informacoes a partir de um ficheiro");
+                System.out.println("2 - Introduzir as informações manualmente.");
 
                 int opcao = sc.nextInt(); //selecionar opcao no menu
                 while (opcao < -1 || opcao > 3) { //confirmar se a opcao e valida
@@ -70,41 +71,6 @@ public class projetoFinal {
         } else {
             System.out.println("Numero de argumentos incorreto ou argumentos invalidos.");
         }
-
-         /*
-        double[][] arrElevado;
-        System.out.println("Distribuicao nao normalizada");
-        for(int i = 0; i <= n; i++){
-           arrElevado = elevarArr(mLeslie, i);
-           printMatriz2CasasDecimais(distPopulacao(arrElevado, vetor),i);
-        }
-
-        System.out.println();
-        System.out.println("Distribuicao normalizada");
-        for(int i = 0; i <= n; i++){
-            arrElevado = elevarArr(mLeslie, i);
-            printMatriz2CasasDecimais( distPopulacaoN(distPopulacao(arrElevado, vetor), dimPopulacao(mLeslie, vetor, i)), i);
-        }
-
-        System.out.println();
-        System.out.println("Numero total de individuos");
-        for(int i = 0; i <= n; i++){
-            printValores2CasasDecimais(dimPopulacao(mLeslie, vetor, i), i);
-        }
-
-        System.out.println();
-        System.out.println("Taxa de variacao");
-        for(int i = 0; i < n; i++){
-            printValores2CasasDecimais(taxaVarPopulacao(mLeslie, vetor, i), i);
-        }
-
-        System.out.println();
-        Matrix matrizLeslie = new Basic2DMatrix(mLeslie);
-        maiorValorProprio(matrizLeslie);
-        */
-
-        //Falta o gnuplot
-        //Se tivermos tempo vermos melhor se compensa ter o menu dentro do main ou no maind chamar o menu(talvez mais eficiente)
     }
     //======================================================================================================================
     /**
@@ -144,16 +110,6 @@ public class projetoFinal {
      * @throws FileNotFoundException
      */
     public static void readFile(String[] outputFileInfo, String fileName, double[] matriz, double[] matrizSobrevivencia, double[] matrizNatalidade, boolean modoInterativo) throws FileNotFoundException {
-        while (new File(fileName).isFile() == true) {
-            if (modoInterativo == true) {
-                System.out.println("Ficheiro invalido ou inexistente, por favor inserir novo ficheiro"); //Pede um ficheiro novo
-                fileName = sc.nextLine();
-            } else { //Se nao for modo interativo, programa encerra
-                System.out.println("Ficheiro invalido ou inexistente."); //Avisa que o ficheiro nao existe
-                System.exit(0); //fecha o programa
-            }
-        }
-
         String[] outputFileName = fileName.split("\\."); //Separar o nome do ficheiro da extensao
         outputFileInfo[0] = outputFileName[0]; //guarda o nome do ficheiro, sem extensao
 
@@ -161,39 +117,31 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+    public static void storeFileInfo(String filename) throws FileNotFoundException {
 
-    /**
-     * Este metodo pega no ficheiro lido e separa os valores por virgulas,com o uso do split, depois vai definir por
-     * cada linha do ficheiro o vetor inicial, a matriz sobrevivencia e a matriz natalidade, com o uso do metodo
-     * toMatrix. Por ultimo, depois de estarem todas as linhas do ficheiro definidas cria a matriz leslie, com o uso do
-     * metodo matrizLeslie.
-     *
-     * @param fileName
-     * @throws FileNotFoundException
-     */
-    public static void storeFileInfo(String fileName) throws FileNotFoundException {
+        System.out.println();
+        System.out.println("Introduza o número de gerações a estimar");
+        int n = sc.nextInt();
 
-        Scanner lerFicheiro = new Scanner(new File(fileName));
+        File ficheiro = new File(filename);
+        Scanner ler = new Scanner(ficheiro);
 
         String[] linha1 = new String[0];
         String[] linha2 = new String[0];
         String[] linha3 = new String[0];
-        String linha = sc.nextLine();
         int z = 1;
 
         while (z != 4) {
-            if (linha.trim().length() != 0){        //se a linha nao for nula (se tiver espacos em branco corta-os)
-                if(z == 1){
+            String linha = ler.nextLine();
+            if(linha.trim().length() != 0) {        //se a linha nao for nula (se tiver espacos em branco corta-os)
+                if (z == 1) {
                     linha1 = linha.split(", ");
-                }else if(z == 2){
+                } else if (z == 2) {
                     linha2 = linha.split(", ");
-                }else{
+                } else {
                     linha3 = linha.split(", ");
                 }
                 z++;
-                linha = sc.nextLine();
-            } else {
-                linha = sc.nextLine();
             }
         }
 
@@ -202,7 +150,7 @@ public class projetoFinal {
         double[] matrizNatalidade = toMatrix(linha1, linha2, linha3, 'f');
         double[][] mLeslie = criarMatrizLeslie(matrizSobrevivencia, matrizNatalidade);  //arr2 tem que ser matrizNatalidade
 
-        lerFicheiro.close(); //Fecha o ficheiro
+        ler.close(); //Fecha o ficheiro
         System.out.println("Distribuição inicial: ");
         printArray(vetor);
         System.out.println("Matriz natalidade: ");
@@ -211,6 +159,39 @@ public class projetoFinal {
         printArray(matrizSobrevivencia);
         System.out.println("Matriz Leslie");
         printMatriz(mLeslie);
+
+
+
+        double[][] arrElevado;
+        System.out.println("Distribuicao nao normalizada");
+        for(int i = 0; i <= n; i++){
+           arrElevado = elevarArr(mLeslie, i);
+           printMatriz2CasasDecimais(distPopulacao(arrElevado, vetor),i);
+        }
+
+        System.out.println();
+        System.out.println("Distribuicao normalizada");
+        for(int i = 0; i <= n; i++){
+            arrElevado = elevarArr(mLeslie, i);
+            printMatriz2CasasDecimais( distPopulacaoN(distPopulacao(arrElevado, vetor), dimPopulacao(mLeslie, vetor, i)), i);
+        }
+
+        System.out.println();
+        System.out.println("Numero total de individuos");
+        for(int i = 0; i <= n; i++){
+            printValores2CasasDecimais(dimPopulacao(mLeslie, vetor, i), i);
+        }
+
+        System.out.println();
+        System.out.println("Taxa de variacao");
+        for(int i = 0; i < n; i++){
+            printValores2CasasDecimais(taxaVarPopulacao(mLeslie, vetor, i), i);
+        }
+
+        System.out.println();
+        Matrix matrizLeslie = new Basic2DMatrix(mLeslie);
+        maiorValorProprio(matrizLeslie);
+
     }
 
     //======================================================================================================================
@@ -224,10 +205,10 @@ public class projetoFinal {
      */
     public static void introduzirDados(double[] matriz, double[] matrizSobrevivencia, double[] matrizNatalidade) {
         String newFileName; //Variavel que guarda o nome da especie quando o utilizador insere os dados
-        System.out.println("Identifique a nova especie a ser estudada :");
-        newFileName = sc.nextLine(); //Ler o nome da especie
+        System.out.println("Identifique o número de gerações a estimar :");
+        int n = sc.nextInt();
 
-        System.out.println("Introduza as idades:");
+        System.out.println("Introduza a quantidade de faixas etárias:");
         int idades = sc.nextInt(); //da a quantidade de idades, ou faixas etarias
         matriz = new double[idades];//Define a quantidade de faixas etarias
 
@@ -260,6 +241,37 @@ public class projetoFinal {
         printArray(matrizSobrevivencia);
         System.out.println("Matriz Leslie");
         printMatriz(mLeslie);
+
+        double[][] arrElevado;
+        System.out.println("Distribuicao nao normalizada");
+        for(int i = 0; i <= n; i++){
+           arrElevado = elevarArr(mLeslie, i);
+           printMatriz2CasasDecimais(distPopulacao(arrElevado, matriz),i);
+        }
+
+        System.out.println();
+        System.out.println("Distribuicao normalizada");
+        for(int i = 0; i <= n; i++){
+            arrElevado = elevarArr(mLeslie, i);
+            printMatriz2CasasDecimais( distPopulacaoN(distPopulacao(arrElevado, matriz), dimPopulacao(mLeslie, matriz, i)), i);
+        }
+
+        System.out.println();
+        System.out.println("Numero total de individuos");
+        for(int i = 0; i <= n; i++){
+            printValores2CasasDecimais(dimPopulacao(mLeslie, matriz, i), i);
+        }
+
+        System.out.println();
+        System.out.println("Taxa de variacao");
+        for(int i = 0; i < n; i++){
+            printValores2CasasDecimais(taxaVarPopulacao(mLeslie, matriz, i), i);
+        }
+
+        System.out.println();
+        Matrix matrizLeslie = new Basic2DMatrix(mLeslie);
+        maiorValorProprio(matrizLeslie);
+
     }
 
 
@@ -297,7 +309,6 @@ public class projetoFinal {
         System.out.printf("%.2f", valor);
         System.out.println();
     }
-
     //======================================================================================================================
 
     /**
@@ -360,7 +371,7 @@ public class projetoFinal {
     //======================================================================================================================
 
     /**
-     * Este metodo faz a criacao da matriz de leslie.
+     * Este metodo faz a criacao da matriz de leslie
      *
      * @param arr1
      * @param arr2
@@ -636,7 +647,11 @@ public class projetoFinal {
 
     //======================================================================================================================
 
-
+    /**
+     * Este metodo mostra a distribuicao da populacao ao longo do tempo.
+     *
+     * @param geracao
+     */
     //public static Matrix distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
     //      double[][] matrix = new double[matrizLeslie.rows()][geracao + 1];
 //
@@ -652,14 +667,6 @@ public class projetoFinal {
     //    return distribuicaoPorInstante;
     // }
 
-    /**
-     * Este metodo devolve uma matriz bidimensional da distribuicao da populacao ao longo do tempo.
-     *
-     * @param arr
-     * @param vetor
-     * @param geracao
-     * @return matriz bidimensional da distribuicao da populacao ao longo do tempo
-     */
     private static double[][] distribuicaoPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
         double[][] matriz = new double[geracao + 1][geracao + 1];
         for (int i = 0; i < matriz.length; i++) {
