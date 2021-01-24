@@ -71,33 +71,7 @@ public class projetoFinal {
             System.out.println("Numero de argumentos incorreto ou argumentos invalidos.");
         }
 
-        /*
-        String[] linha1 = new String[0];
-        String[] linha2 = new String[0];
-        String[] linha3 = new String[0];
-        String linha = ler.nextLine();
-        int z = 1;
-
-        while (z != 4) {
-            if (linha.trim().length() != 0){        //se a linha nao for nula (se tiver espacos em branco corta-os)
-                if(z == 1){
-                    linha1 = linha.split(", ");
-                }else if(z == 2){
-                    linha2 = linha.split(", ");
-                }else{
-                    linha3 = linha.split(", ");
-                }
-                z++;
-                linha = ler.nextLine();
-            } else {
-                linha = ler.nextLine();
-            }
-        }
-
-        double[] vetor = toMatrix(linha1, linha2, linha3, 'x');
-        double[] matrizSobrevivencia = toMatrix(linha1, linha2, linha3, 's');
-        double[] matrizNatalidade = toMatrix(linha1, linha2, linha3, 'f');
-
+         /*
         double[][] arrElevado;
         System.out.println("Distribuicao nao normalizada");
         for(int i = 0; i <= n; i++){
@@ -179,28 +153,50 @@ public class projetoFinal {
         String[] outputFileName = fileName.split("\\."); //Separar o nome do ficheiro da extensao
         outputFileInfo[0] = outputFileName[0]; //guarda o nome do ficheiro, sem extensao
 
-        storeFileInfo(fileName, matriz, matrizSobrevivencia, matrizNatalidade);//Ler e guardar dados do ficheiro
-
+        storeFileInfo(fileName);//Ler e guardar dados do ficheiro
     }
 
     //======================================================================================================================
-    public static void storeFileInfo(String fileName, double[] matriz, double[] matrizSobrevivencia, double[] matrizNatalidade) throws FileNotFoundException {
+    public static void storeFileInfo(String fileName) throws FileNotFoundException {
 
-        double[][] matrizLeslie; //Variavel que contem os dados referentes ao modelo matricial de Leslie
         Scanner lerFicheiro = new Scanner(new File(fileName));
-        String[] primeiraLinha = lerFicheiro.nextLine().trim().split(","); //Divide a informacao da populacao inicial
-        matriz = getTotalPopulacao(primeiraLinha); //Guarda a informacao da populacao Inicial
 
-        String[] segundaLinha = lerFicheiro.nextLine().trim().split(","); //Divide a informacao da Taxa de Sobrevivencia
-        matrizSobrevivencia = getValores(segundaLinha); //Guarda a informacao da Taxa de Sobrevivencia
+        String[] linha1 = new String[0];
+        String[] linha2 = new String[0];
+        String[] linha3 = new String[0];
+        String linha = sc.nextLine();
+        int z = 1;
 
-        String[] terceiraLinha = lerFicheiro.nextLine().trim().split(","); //Divide a informacao da Taxa de Natalidade
-        matrizNatalidade = getValores(terceiraLinha); //Guarda a Informacao da Taxa de Natalidade
+        while (z != 4) {
+            if (linha.trim().length() != 0){        //se a linha nao for nula (se tiver espacos em branco corta-os)
+                if(z == 1){
+                    linha1 = linha.split(", ");
+                }else if(z == 2){
+                    linha2 = linha.split(", ");
+                }else{
+                    linha3 = linha.split(", ");
+                }
+                z++;
+                linha = sc.nextLine();
+            } else {
+                linha = sc.nextLine();
+            }
+        }
 
-        matrizLeslie = matrizLeslie(matrizSobrevivencia, matrizNatalidade); //Cria a matriz de Leslie com os valores atribuidos pelo ficheiro
-        printMatriz(matrizLeslie);
+        double[] vetor = toMatrix(linha1, linha2, linha3, 'x');
+        double[] matrizSobrevivencia = toMatrix(linha1, linha2, linha3, 's');
+        double[] matrizNatalidade = toMatrix(linha1, linha2, linha3, 'f');
+        double[][] mLeslie = criarMatrizLeslie(matrizSobrevivencia, matrizNatalidade);  //arr2 tem que ser matrizNatalidade
 
         lerFicheiro.close(); //Fecha o ficheiro
+        System.out.println("Distribuição inicial: ");
+        printArray(vetor);
+        System.out.println("Matriz natalidade: ");
+        printArray(matrizNatalidade);
+        System.out.println("Matriz sobrevivência: ");
+        printArray(matrizSobrevivencia);
+        System.out.println("Matriz Leslie");
+        printMatriz(mLeslie);
     }
 
     //======================================================================================================================
@@ -239,6 +235,13 @@ public class projetoFinal {
         for (int i = 0; i < idades; i++) {
             System.out.println("Introduza valor :");
             matrizNatalidade[i] = sc.nextDouble(); //da a taxa de natalidade, respetivamente.
+        }
+    }
+
+
+    public static void printArray(double[] matriz){
+        for (int i = 0; i < matriz.length; i++){
+            System.out.println(matriz[i]);
         }
     }
 
@@ -339,7 +342,7 @@ public class projetoFinal {
      * @param arr2
      * @return matriz de leslie
      */
-    public static double[][] matrizLeslie(double[]arr1, double[]arr2){
+    public static double[][] criarMatrizLeslie(double[]arr1, double[]arr2){
 
         double[][] mLeslie = new double[arr2.length][arr2.length];
         int z = 0;
