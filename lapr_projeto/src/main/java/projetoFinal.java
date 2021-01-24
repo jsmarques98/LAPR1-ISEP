@@ -161,6 +161,16 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+
+    /**
+     * Este metodo pega no ficheiro lido e separa os valores por virgulas,com o uso do split, depois vai definir por
+     * cada linha do ficheiro o vetor inicial, a matriz sobrevivencia e a matriz natalidade, com o uso do metodo
+     * toMatrix. Por ultimo, depois de estarem todas as linhas do ficheiro definidas cria a matriz leslie, com o uso do
+     * metodo matrizLeslie.
+     *
+     * @param fileName
+     * @throws FileNotFoundException
+     */
     public static void storeFileInfo(String fileName) throws FileNotFoundException {
 
         Scanner lerFicheiro = new Scanner(new File(fileName));
@@ -350,7 +360,7 @@ public class projetoFinal {
     //======================================================================================================================
 
     /**
-     * Este metodo faz a criacao da matriz de leslie
+     * Este metodo faz a criacao da matriz de leslie.
      *
      * @param arr1
      * @param arr2
@@ -626,11 +636,7 @@ public class projetoFinal {
 
     //======================================================================================================================
 
-    /**
-     * Este metodo mostra a distribuicao da populacao ao longo do tempo.
-     *
-     * @param geracao
-     */
+
     //public static Matrix distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
     //      double[][] matrix = new double[matrizLeslie.rows()][geracao + 1];
 //
@@ -646,6 +652,14 @@ public class projetoFinal {
     //    return distribuicaoPorInstante;
     // }
 
+    /**
+     * Este metodo devolve uma matriz bidimensional da distribuicao da populacao ao longo do tempo.
+     *
+     * @param arr
+     * @param vetor
+     * @param geracao
+     * @return matriz bidimensional da distribuicao da populacao ao longo do tempo
+     */
     private static double[][] distribuicaoPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
         double[][] matriz = new double[geracao + 1][geracao + 1];
         for (int i = 0; i < matriz.length; i++) {
