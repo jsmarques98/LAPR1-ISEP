@@ -97,6 +97,10 @@ public class projetoFinal {
         for(int i = 0; i < n; i++){
             printValores2CasasDecimais(taxaVarPopulacao(mLeslie, vetor, i), i);
         }
+
+        System.out.println();
+        Matrix matrizLeslie = new Basic2DMatrix(mLeslie);
+        maiorValorProprio(matrizLeslie);
         */
 
         //Falta o gnuplot
@@ -505,6 +509,7 @@ public class projetoFinal {
             }
         }
 
+        System.out.print("Vetor próprio: ");
         for(int i = 0; i < matA.length; i++) {
             if(i == 0){
                 System.out.print("(" + String.format("%.2f", matA[i][colunaVetor]) + ", ");
@@ -515,6 +520,8 @@ public class projetoFinal {
             }
         }
         System.out.println();
+        System.out.print("Valor próprio: ");
+        System.out.printf("%.4f",+ maior);
         return maior;
     }
 
