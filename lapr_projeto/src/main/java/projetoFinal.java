@@ -197,7 +197,7 @@ public class projetoFinal {
         String[] terceiraLinha = lerFicheiro.nextLine().trim().split(","); //Divide a informacao da Taxa de Natalidade
         matrizNatalidade = getValores(terceiraLinha); //Guarda a Informacao da Taxa de Natalidade
 
-        matrizLeslie = criarMatrizLeslie(matrizSobrevivencia, matrizNatalidade); //Cria a matriz de Leslie com os valores atribuidos pelo ficheiro
+        matrizLeslie = matrizLeslie(matrizSobrevivencia, matrizNatalidade); //Cria a matriz de Leslie com os valores atribuidos pelo ficheiro
         printMatriz(matrizLeslie);
 
         lerFicheiro.close(); //Fecha o ficheiro
@@ -310,50 +310,51 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    /**
-     * Este metodo faz a criacao da matriz de leslie.
-     *
-     * @param matrizSobrevivencia
-     * @param matrizNatalidade
-     * @return matriz de leslie
-     */
-    public static double[][] criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
-        double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
-        for (int i = 0; i < matrizNatalidade.length; i++) {
-            matrizCriada[0][i] = matrizNatalidade[i];
-        }
-        int contador = 0;
-        for (int i = 0; i < matrizSobrevivencia.length; i++) {
-            for (int j = 0; j < matrizSobrevivencia.length; i++) {
-                if (i == j + 1) {
-                    matrizCriada[i][j] = matrizSobrevivencia[contador];
-                    contador++;
-                } else {
-                    matrizCriada[i][j] = 0;
-                }
-            }
-        }
-        return matrizCriada;
-    }
+
+    //public static double[][] criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
+       // double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
+        //for (int i = 0; i < matrizNatalidade.length; i++) {
+           // matrizCriada[0][i] = matrizNatalidade[i];
+        //}
+        //int contador = 0;
+        //for (int i = 0; i < matrizSobrevivencia.length; i++) {
+           // for (int j = 0; j < matrizSobrevivencia.length; i++) {
+               // if (i == j + 1) {
+                   // matrizCriada[i][j] = matrizSobrevivencia[contador];
+                    //contador++;
+                //} else {
+                   // matrizCriada[i][j] = 0;
+                //}
+            //}
+        //}
+        //return matrizCriada;
+    //}
 
     //======================================================================================================================
-    //cria matriz de Leslie
-    //public static double[][] matrizLeslie(double[]arr1, double[]arr2){
 
-        //double[][] mLeslie = new double[arr2.length][arr2.length];
-        //int z = 0;
-        //for(int i = 0; i < mLeslie.length; i++){
-            //if(i == 0){
-               // for(int j = 0; j < mLeslie.length; j++){
-                //    mLeslie[i][j] = arr2[j];
-              //  }
-            //}else if(z != arr1.length){
-            //    mLeslie[i][z] = arr1[z];
-          //      z++;
-        //    }
-      //  }
-        //return mLeslie;
-   // }
+    /**
+     * Este metodo faz a criacao da matriz de leslie
+     *
+     * @param arr1
+     * @param arr2
+     * @return matriz de leslie
+     */
+    public static double[][] matrizLeslie(double[]arr1, double[]arr2){
+
+        double[][] mLeslie = new double[arr2.length][arr2.length];
+        int z = 0;
+        for(int i = 0; i < mLeslie.length; i++){
+            if(i == 0){
+                for(int j = 0; j < mLeslie.length; j++){
+                    mLeslie[i][j] = arr2[j];
+               }
+            }else if(z != arr1.length){
+                mLeslie[i][z] = arr1[z];
+               z++;
+            }
+        }
+        return mLeslie;
+   }
 
     //======================================================================================================================
     /**
