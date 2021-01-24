@@ -367,31 +367,6 @@ public class projetoFinal {
 
     //======================================================================================================================
     /**
-     * Este metodo devolve o total de populacao.
-     *
-     * @param linha
-     * @return matriz
-     */
-    public static double[] getTotalPopulacao(String[] linha) {
-        double[] matriz = new double[linha.length];
-        for (int i = 0; i < linha.length; i++) {
-            String[] objeto = linha[i].split("=");
-            matriz[i] = Double.parseDouble(objeto[i]);
-        }
-        return matriz;
-    }
-
-    //======================================================================================================================
-    public static double[] getValores(String[] linha) {
-        double[] matriz = new double[linha.length];
-        for (int i = 0; i < linha.length; i++) {
-            String[] objeto = linha[i].trim().split("=");
-            matriz[i] = Double.parseDouble(objeto[i]);
-        }
-        return matriz;
-    }
-    //======================================================================================================================
-    /**
      * Este metodo faz o calculo do produto entre duas matrizes de igual dimensoes e devolve a matriz resultante desse
      * mesmo produto.
      *
@@ -420,7 +395,7 @@ public class projetoFinal {
      * @param n
      * @return matriz identidade
      */
-    public static double[][] arrId(int n) {
+    private static double[][] arrId(int n) {
 
         double[][] I = new double[n][n]; //Calculo da matriz identidade
         for (int i = 0; i < n; i++) {
@@ -518,7 +493,7 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    //Calcula a distribuicao normalizada da populacao para um determinado t ?????????????????????????????????
+    //Calcula a distribuicao normalizada da populacao para um determinado t
     public static double[] distPopulacaoN(double[] dist, double total){
 
         double[] distribuicaoN = new double[dist.length];
