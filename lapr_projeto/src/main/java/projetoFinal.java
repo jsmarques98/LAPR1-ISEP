@@ -173,7 +173,7 @@ public class projetoFinal {
         System.out.println("Distribuicao normalizada");
         for(int i = 0; i <= n; i++){
             arrElevado = elevarArr(mLeslie, i);
-            printMatriz2CasasDecimais( distPopulacaoN(distPopulacao(arrElevado, vetor), dimPopulacao(mLeslie, vetor, i)), i);
+            printMatriz2CasasDecimais( distPopulacaoNormalizada(distPopulacao(arrElevado, vetor), dimPopulacao(mLeslie, vetor, i)), i);
         }
 
         System.out.println();
@@ -252,7 +252,7 @@ public class projetoFinal {
         System.out.println("Distribuicao normalizada");
         for(int i = 0; i <= n; i++){
             arrElevado = elevarArr(mLeslie, i);
-            printMatriz2CasasDecimais( distPopulacaoN(distPopulacao(arrElevado, matriz), dimPopulacao(mLeslie, matriz, i)), i);
+            printMatriz2CasasDecimais( distPopulacaoNormalizada(distPopulacao(arrElevado, matriz), dimPopulacao(mLeslie, matriz, i)), i);
         }
 
         System.out.println();
@@ -364,32 +364,6 @@ public class projetoFinal {
         }
         return mLeslie;
     }
-
-    //======================================================================================================================
-    /**
-     * Este metodo devolve o total de populacao.
-     *
-     * @param linha
-     * @return matriz
-     */
-    public static double[] getTotalPopulacao(String[] linha) {
-        double[] matriz = new double[linha.length];
-        for (int i = 0; i < linha.length; i++) {
-            String[] objeto = linha[i].split("=");
-            matriz[i] = Double.parseDouble(objeto[i]);
-        }
-        return matriz;
-    }
-
-    //======================================================================================================================
-    public static double[] getValores(String[] linha) {
-        double[] matriz = new double[linha.length];
-        for (int i = 0; i < linha.length; i++) {
-            String[] objeto = linha[i].trim().split("=");
-            matriz[i] = Double.parseDouble(objeto[i]);
-        }
-        return matriz;
-    }
     //======================================================================================================================
     /**
      * Este metodo faz o calculo do produto entre duas matrizes de igual dimensoes e devolve a matriz resultante desse
@@ -420,7 +394,7 @@ public class projetoFinal {
      * @param n
      * @return matriz identidade
      */
-    public static double[][] arrId(int n) {
+    private static double[][] arrId(int n) {
 
         double[][] I = new double[n][n]; //Calculo da matriz identidade
         for (int i = 0; i < n; i++) {
@@ -518,8 +492,15 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
-    //Calcula a distribuicao normalizada da populacao para um determinado t ?????????????????????????????????
-    public static double[] distPopulacaoN(double[] dist, double total){
+
+    /**
+     * Este metodo calcula a distribuicao normalizada da populacao para um determinado t.
+     *
+     * @param dist
+     * @param total
+     * @return distribuicao normalizada da populacao para um determinado t
+     */
+    public static double[] distPopulacaoNormalizada(double[] dist, double total){
 
         double[] distribuicaoN = new double[dist.length];
         for(int i = 0; i < distribuicaoN.length; i++){
@@ -554,13 +535,15 @@ public class projetoFinal {
     }
 
     //======================================================================================================================
+
     /**
      * Este metodo devolve uma matriz de uma dimensao de uma populacao ao longo do tempo.
      *
+     * @param arr
+     * @param vetor
      * @param geracao
-     * @return matriz de uma dimensao de uma populacao ao longo do tempo
+     * @return dimensao de uma populacao ao longo do tempo
      */
-
     private static double[][] dimPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
 
         double[][] matriz = new double[geracao + 1][geracao + 1];
@@ -603,7 +586,7 @@ public class projetoFinal {
      */
     private static double[][] taxaVarPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
 
-        double[][] matriz = new double[geracao + 1][geracao + 1];
+        double[][] matriz = new double[geracao][geracao];
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < 2; j++) {
                 if (j == 0) {
@@ -616,6 +599,15 @@ public class projetoFinal {
         return matriz;
     }
     //=====================================================================================================================
+
+    /**
+     * Este metodo devolve uma matriz bidimensional da distribuicao da populacao ao longo do tempo(nao normalizada).
+     *
+     * @param arr
+     * @param vetor
+     * @param geracao
+     * @return distribuicao da populacao ao longo do tempo
+     */
     private static double[][] distribuicaoPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
         double[][] matriz = new double[geracao + 1][geracao + 1];
         for (int i = 0; i < matriz.length; i++) {
