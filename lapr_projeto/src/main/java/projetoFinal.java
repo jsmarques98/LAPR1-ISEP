@@ -21,7 +21,7 @@ public class projetoFinal {
     static Scanner sc = new Scanner(System.in);
 
     //======================================================================================================================
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         double[] matriz = new double[MAX]; //Array que guarda as informacoes da quantidade de populacao recebido como parametro
         double[] matrizSobrevivencia = new double[MAX]; //Array que guarda as informacoes das taxas de sobrevivencia recebidos como parametro
         double[] matrizNatalidade = new double[MAX]; //Array que guarda as informacoes das taxas de natalidade recebidas como parametro
@@ -98,7 +98,6 @@ public class projetoFinal {
 
     }
     //========================================================================================================================
-
     /**
      * Este metodo faz a leitura do ficheiro recebido por parametro e as suas validacoes caso este nao seja encontrado
      * ou seja invalido
@@ -117,7 +116,6 @@ public class projetoFinal {
 
         storeFileInfo(fileName);//Ler e guardar dados do ficheiro
     }
-
     //======================================================================================================================
     public static void storeFileInfo(String filename) throws FileNotFoundException {
 
@@ -195,7 +193,6 @@ public class projetoFinal {
         maiorValorProprio(matrizLeslie);
 
     }
-
     //======================================================================================================================
     /**
      * Este metodo faz a leitura separadamente dos diferentes topicos existentes na matriz, ou seja a distribuicao
@@ -275,14 +272,11 @@ public class projetoFinal {
         maiorValorProprio(matrizLeslie);
 
     }
-
-
     public static void printArray(double[] matriz){
         for (int i = 0; i < matriz.length; i++){
             System.out.println(matriz[i]);
         }
     }
-
     //======================================================================================================================
     /**
      * Este metodo imprime os valores de uma matriz com duas casas decimais.
@@ -298,7 +292,6 @@ public class projetoFinal {
         }
         System.out.println();
     }
-
     //======================================================================================================================
     /**
      * Este metodo imprime o valor com duas casas decimais.
@@ -312,7 +305,6 @@ public class projetoFinal {
         System.out.println();
     }
     //======================================================================================================================
-
     /**
      * Este metodo pega nas linhas do ficheiro lido e, basicamente formata-as da forma que nos queremos com o uso do
      * "replaceAll", onde ha a substituicao de espacos e do carater "=" como se de um split se tratasse.
@@ -348,30 +340,7 @@ public class projetoFinal {
         }
         return convert;
     }
-
     //======================================================================================================================
-
-    //public static double[][] criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
-    // double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
-    //for (int i = 0; i < matrizNatalidade.length; i++) {
-    // matrizCriada[0][i] = matrizNatalidade[i];
-    //}
-    //int contador = 0;
-    //for (int i = 0; i < matrizSobrevivencia.length; i++) {
-    // for (int j = 0; j < matrizSobrevivencia.length; i++) {
-    // if (i == j + 1) {
-    // matrizCriada[i][j] = matrizSobrevivencia[contador];
-    //contador++;
-    //} else {
-    // matrizCriada[i][j] = 0;
-    //}
-    //}
-    //}
-    //return matrizCriada;
-    //}
-
-    //======================================================================================================================
-
     /**
      * Este metodo faz a criacao da matriz de leslie
      *
@@ -646,29 +615,7 @@ public class projetoFinal {
         }
         return matriz;
     }
-
-    //======================================================================================================================
-
-    /**
-     * Este metodo mostra a distribuicao da populacao ao longo do tempo.
-     *
-     * @param geracao
-     */
-    //public static Matrix distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
-    //      double[][] matrix = new double[matrizLeslie.rows()][geracao + 1];
-//
-    //  for (int j = 0; j < matrizLeslie.rows(); j++) {
-    //        matrix[j][0] = matrizLeslie.get(j, 0);
-    //      }
-//
-    //Matrix distribuicaoPorInstante = Matrix.from2DArray(matrix);
-//
-    //for (int i = 1; i <= geracao; i++) {
-    //    distribuicaoPorInstante.setColumn(i, convertToVector(populacaoDistribuicaoNormalizada(L, i, matrizLeslie)));
-    //  }
-    //    return distribuicaoPorInstante;
-    // }
-
+    //=====================================================================================================================
     private static double[][] distribuicaoPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
         double[][] matriz = new double[geracao + 1][geracao + 1];
         for (int i = 0; i < matriz.length; i++) {
@@ -682,10 +629,6 @@ public class projetoFinal {
         }
         return matriz;
     }
-
-
-
-
     //======================================================================================================================
     /**
      * Este metodo faz o calculo e devolve a distribuicao da populacao normalizada.
@@ -699,18 +642,6 @@ public class projetoFinal {
         Matrix matrix = L.power(geracao);
         return matrix.multiply(matrizLeslie);
     }
-
-    //======================================================================================================================
-    /**
-     * Este metodo verifica se o ficheiro e valido ou nao.
-     *
-     * @param result
-     * @return true se o ficheiro for valido, false se o ficheiro for null ou invalido
-     */
-    private static boolean isFileValid(String result) {
-        return ((result != null) && (new File(result).isFile()));
-    }
-
     //======================================================================================================================
     /**
      * Metodo que devolve o nome do ficheiro.
@@ -724,7 +655,6 @@ public class projetoFinal {
 
         return (fileName);
     }
-
     //======================================================================================================================
     /**
      * Metodo que constroi os graficos do total de populacao, da taxa de variacao, da evolucao da populacao e da
@@ -759,7 +689,6 @@ public class projetoFinal {
                 PlotStyle myPlotStyle = new PlotStyle();
                 myPlotStyle.setStyle(Style.LINESPOINTS);
                 myPlotStyle.setLineWidth(1);
-                //RgbPlotColor = new RgbPlotColor(
                 myPlotStyle.setLineType(NamedPlotColor.BLUE);
                 myPlotStyle.setPointType(7);
                 myPlotStyle.setPointSize(1);
