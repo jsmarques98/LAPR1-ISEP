@@ -25,9 +25,9 @@ public class projetoFinal {
         double[] matrizSobrevivencia = new double[MAX]; //Array que guarda as informacoes das taxas de sobrevivencia recebidos como parametro
         double[] matrizNatalidade = new double[MAX]; //Array que guarda as informacoes das taxas de natalidade recebidas como parametro
         String[] outputFileInfo = new String[3]; //Usado para definir o nome dos ficheiros de output
-        boolean endProgram = true, modoInterativo; //usado para definir quando acabar o programa e se os modulo funcionam em modo interativo ou nao interativo
+        boolean endProgram = false, modoInterativo; //usado para definir quando acabar o programa e se os modulo funcionam em modo interativo ou nao interativo
 
-        if (args.length == 2)  { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
+        if (args.length == 1)  { //Modo interativo pede, 2 argumentos nome e nomeFicheiro
             modoInterativo = true;
 
             while (endProgram == false) { //Repetir ate o programa ser fechado
@@ -99,8 +99,8 @@ public class projetoFinal {
         }
         */
 
-    //Falta o gnuplot
-    //Se tivermos tempo vermos melhor se compensa ter o menu dentro do main ou no maind chamar o menu(talvez mais eficiente)
+        //Falta o gnuplot
+        //Se tivermos tempo vermos melhor se compensa ter o menu dentro do main ou no maind chamar o menu(talvez mais eficiente)
     }
     //======================================================================================================================
     /**
@@ -140,7 +140,7 @@ public class projetoFinal {
      * @throws FileNotFoundException
      */
     public static void readFile(String[] outputFileInfo, String fileName, double[] matriz, double[] matrizSobrevivencia, double[] matrizNatalidade, boolean modoInterativo) throws FileNotFoundException {
-        while (new File(fileName).isFile() == false) {
+        while (new File(fileName).isFile() == true) {
             if (modoInterativo == true) {
                 System.out.println("Ficheiro invalido ou inexistente, por favor inserir novo ficheiro"); //Pede um ficheiro novo
                 fileName = sc.nextLine();
@@ -236,6 +236,16 @@ public class projetoFinal {
             System.out.println("Introduza valor :");
             matrizNatalidade[i] = sc.nextDouble(); //da a taxa de natalidade, respetivamente.
         }
+        double[][] mLeslie = criarMatrizLeslie(matrizSobrevivencia, matrizNatalidade);
+
+        System.out.println("Distribuição inicial: ");
+        printArray(matriz);
+        System.out.println("Matriz natalidade: ");
+        printArray(matrizNatalidade);
+        System.out.println("Matriz sobrevivência: ");
+        printArray(matrizSobrevivencia);
+        System.out.println("Matriz Leslie");
+        printMatriz(mLeslie);
     }
 
 
@@ -315,22 +325,22 @@ public class projetoFinal {
     //======================================================================================================================
 
     //public static double[][] criarMatrizLeslie(double[] matrizSobrevivencia, double[] matrizNatalidade) {
-       // double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
-        //for (int i = 0; i < matrizNatalidade.length; i++) {
-           // matrizCriada[0][i] = matrizNatalidade[i];
-        //}
-        //int contador = 0;
-        //for (int i = 0; i < matrizSobrevivencia.length; i++) {
-           // for (int j = 0; j < matrizSobrevivencia.length; i++) {
-               // if (i == j + 1) {
-                   // matrizCriada[i][j] = matrizSobrevivencia[contador];
-                    //contador++;
-                //} else {
-                   // matrizCriada[i][j] = 0;
-                //}
-            //}
-        //}
-        //return matrizCriada;
+    // double[][] matrizCriada = new double[matrizSobrevivencia.length][matrizNatalidade.length];
+    //for (int i = 0; i < matrizNatalidade.length; i++) {
+    // matrizCriada[0][i] = matrizNatalidade[i];
+    //}
+    //int contador = 0;
+    //for (int i = 0; i < matrizSobrevivencia.length; i++) {
+    // for (int j = 0; j < matrizSobrevivencia.length; i++) {
+    // if (i == j + 1) {
+    // matrizCriada[i][j] = matrizSobrevivencia[contador];
+    //contador++;
+    //} else {
+    // matrizCriada[i][j] = 0;
+    //}
+    //}
+    //}
+    //return matrizCriada;
     //}
 
     //======================================================================================================================
@@ -350,14 +360,14 @@ public class projetoFinal {
             if(i == 0){
                 for(int j = 0; j < mLeslie.length; j++){
                     mLeslie[i][j] = arr2[j];
-               }
+                }
             }else if(z != arr1.length){
                 mLeslie[i][z] = arr1[z];
-               z++;
+                z++;
             }
         }
         return mLeslie;
-   }
+    }
 
     //======================================================================================================================
     /**
@@ -548,25 +558,24 @@ public class projetoFinal {
     /**
      * Este metodo devolve uma matriz de uma dimensao de uma populacao ao longo do tempo.
      *
-     * @param arrayTarget
      * @param geracao
      * @return matriz de uma dimensao de uma populacao ao longo do tempo
      */
 
-        private static double[][] dimPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
+    private static double[][] dimPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
 
-            double[][] matriz = new double[geracao + 1][geracao + 1];
-            for (int i = 0; i < matriz.length; i++) {
-                for (int j = 0; j < 2; j++) {
-                    if (j == 0) {
-                        matriz[i][j] = i;
-                    } else if (j == 1) {
-                        matriz[i][j] = dimPopulacao(arr, vetor, i);
-                    }
+        double[][] matriz = new double[geracao + 1][geracao + 1];
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < 2; j++) {
+                if (j == 0) {
+                    matriz[i][j] = i;
+                } else if (j == 1) {
+                    matriz[i][j] = dimPopulacao(arr, vetor, i);
                 }
             }
-            return matriz;
         }
+        return matriz;
+    }
 
     //======================================================================================================================
     /**
@@ -613,24 +622,22 @@ public class projetoFinal {
     /**
      * Este metodo mostra a distribuicao da populacao ao longo do tempo.
      *
-     * @param L
      * @param geracao
-     * @param matrizLeslie
      */
     //public static Matrix distribuicaoPopulacaoPorInstante(Matrix L, int geracao, Matrix matrizLeslie) {
-  //      double[][] matrix = new double[matrizLeslie.rows()][geracao + 1];
+    //      double[][] matrix = new double[matrizLeslie.rows()][geracao + 1];
 //
-      //  for (int j = 0; j < matrizLeslie.rows(); j++) {
+    //  for (int j = 0; j < matrizLeslie.rows(); j++) {
     //        matrix[j][0] = matrizLeslie.get(j, 0);
-  //      }
+    //      }
 //
-        //Matrix distribuicaoPorInstante = Matrix.from2DArray(matrix);
+    //Matrix distribuicaoPorInstante = Matrix.from2DArray(matrix);
 //
-        //for (int i = 1; i <= geracao; i++) {
-        //    distribuicaoPorInstante.setColumn(i, convertToVector(populacaoDistribuicaoNormalizada(L, i, matrizLeslie)));
-      //  }
+    //for (int i = 1; i <= geracao; i++) {
+    //    distribuicaoPorInstante.setColumn(i, convertToVector(populacaoDistribuicaoNormalizada(L, i, matrizLeslie)));
+    //  }
     //    return distribuicaoPorInstante;
-   // }
+    // }
 
     private static double[][] distribuicaoPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
         double[][] matriz = new double[geracao + 1][geracao + 1];
@@ -639,7 +646,7 @@ public class projetoFinal {
                 if (j == 0) {
                     matriz[i][j] = i;
                 } else if (j == 1) {
-                    matriz[i][j] = populacaoDistribuicaoNormalizada(arr, geracao, vetor);
+                    // matriz[i][j] = populacaoDistribuicaoNormalizada(arr, geracao, vetor);
                 }
             }
         }
@@ -702,7 +709,7 @@ public class projetoFinal {
         int escolha = Y;
         String[] linha = new String[0];
         int geracao = 0;
-        double[] vetor = new int[0];
+        double[] vetor = new double[0];
         double[][] arr = new double[0][0];
 
         if (modoInterativo == true) {
@@ -1099,6 +1106,6 @@ public class projetoFinal {
 
     }
     //=======================================================================================================================
-    
+
 
 }
