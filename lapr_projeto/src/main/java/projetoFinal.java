@@ -549,7 +549,7 @@ public class projetoFinal {
      * @return matriz de uma dimensao de uma populacao ao longo do tempo
      */
 
-        public static double[][] dimPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
+        private static double[][] dimPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
 
             double[][] matriz = new double[geracao + 1][geracao + 1];
             for (int i = 0; i < matriz.length; i++) {
@@ -589,7 +589,7 @@ public class projetoFinal {
      * @param geracao
      * @return matriz da taxa de variacao da populacao ao longo do tempo/geracoes
      */
-    public static double[][] taxaVarPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
+    private static double[][] taxaVarPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
 
         double[][] matriz = new double[geracao + 1][geracao + 1];
         for (int i = 0; i < matriz.length; i++) {
@@ -628,7 +628,7 @@ public class projetoFinal {
     //    return distribuicaoPorInstante;
    // }
 
-    public static double[][] distribuicaoPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
+    private static double[][] distribuicaoPopulacaoPorInstante(double[][] arr, double[] vetor, int geracao) {
         double[][] matriz = new double[geracao + 1][geracao + 1];
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < 2; j++) {
